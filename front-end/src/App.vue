@@ -1,8 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen font-Roboto bg-primary-bar">
-    <SiteNavigation />
     <RouterView />
-  </div>
 </template>
 
 <script setup>
