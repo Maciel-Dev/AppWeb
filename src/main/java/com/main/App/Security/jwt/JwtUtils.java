@@ -17,14 +17,14 @@ import java.util.Date;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("$(App.app.jwtSecret)")
+    @Value("$(WebApp.app.jwtSecret)")
     private String jwtSecret;
 
-    @Value("$(App.app.jwtExpirationMs)")
-    private int jwtExpirationMs;
+//    @Value("$(WebApp.app.jwtExpirationMs)")
+//    private int jwtExpirationMs;
 
-    @Value("$(App.app.jwtCookieName)")
-    private int jwtCookie;
+    @Value("$(WebApp.app.jwtCookieName)")
+    private String jwtCookie;
 
     public String getJwtFromCookies(HttpServletRequest request)
     {
@@ -42,13 +42,13 @@ public class JwtUtils {
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal)
     {
         String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-        ResponseCookie cookie = ResponseCookie.from(String.valueOf(jwtCookie), null).path("/api").maxAge(24*60*60).httpOnly(true).build();
+        ResponseCookie cookie = ResponseCookie.from(jwt).path("/api").maxAge(24*60*60).httpOnly(true).build();
         return cookie;
     }
 
     public ResponseCookie getCleanJwtCookie()
     {
-        ResponseCookie cookie = ResponseCookie.from(String.valueOf(jwtCookie), null).path("/api").build();
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
         return cookie;
     }
 
@@ -84,8 +84,8 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.ES512, jwtSecret)
+                .setExpiration(new Date((new Date()).getTime() + 8000000))
+                .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
 }
