@@ -15,7 +15,7 @@
 
         <form class="mt-6" action="#" method="POST">
           <div>
-            <label class="block text-gray-700">Email Address</label>
+            <label class="block text-gray-700">Email Address TESTE</label>
             <input type="email" name="" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
           </div>
 
