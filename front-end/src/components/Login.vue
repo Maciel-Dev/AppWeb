@@ -13,15 +13,15 @@
 
         <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
 
-        <form class="mt-6" action="#" method="POST">
+        <form class="mt-6" @submit.prevent="postUser">
           <div>
-            <label class="block text-gray-700">Email Address</label>
-            <input type="email" name="" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
+            <label class="block text-gray-700">Username</label>
+            <input v-model="username" type="text" name="" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
           </div>
 
           <div class="mt-4">
             <label class="block text-gray-700">Password</label>
-            <input type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+            <input v-model="password" type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none" required>
           </div>
 
@@ -44,20 +44,36 @@
             Google</span>
           </div>
         </button>
-
         <p class="mt-8">Need an account? <a href="#" class="text-blue-500 hover:text-blue-700 font-semibold">Create an
           account</a></p>
-
-
       </div>
     </div>
-
   </section>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Login"
+  name: "Login",
+  data(){
+    return{
+      username: '',
+      password: ''
+    }
+  },
+  methods: {
+    postUser: function(event){
+      axios
+          .post("http://localhost:8082/api/auth/signin", {
+            "username": this.username,
+            "password": this.password,
+          })
+          .then((response) => {
+              console.log(response);
+          })
+    }
+  }
 }
 </script>
 

@@ -13,7 +13,6 @@ import com.main.App.Security.jwt.JwtUtils;
 import com.main.App.Security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +23,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serial;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,7 +46,6 @@ public class AuthController {
     PasswordEncoder encoder;
     @Autowired
     JwtUtils jwtUtils;
-
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticationUser(@Valid @RequestBody LoginRequest loginRequest)
