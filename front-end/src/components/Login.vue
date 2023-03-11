@@ -53,9 +53,11 @@
 
 <script>
 import axios from "axios";
+import RegisterComponent from "@/components/RegisterComponent.vue";
 
 export default {
   name: "Login",
+  components: {RegisterComponent},
   data(){
     return{
       username: '',
@@ -70,10 +72,11 @@ export default {
             "password": this.password,
           })
           .then((response) => {
-              console.log(response);
-          })
+              console.log(response.data);
+          });
     }
   }
+
 }
 </script>
 

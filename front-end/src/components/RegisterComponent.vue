@@ -40,6 +40,7 @@
 
 <script>
 import axios from "axios";
+import router from "@/router";
 
 export default {
   name: "RegisterComponent",
@@ -47,7 +48,8 @@ export default {
     return{
       username: '',
       email: '',
-      password: ''
+      password: '',
+      message: ''
     }
   },
   methods: {
@@ -59,10 +61,14 @@ export default {
             "password": this.password
           })
           .then((response) => {
-            console.log(response);
+            if(response.status === 200){
+              this.message = "Registrado com Sucesso!";
+              this.$router.push({path: "/login", props: true});
+            }
           })
     }
-  }
+  },
+  props: { message: String }
 }
 </script>
 
