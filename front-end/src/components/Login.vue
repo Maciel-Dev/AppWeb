@@ -8,7 +8,16 @@
     <div class="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
         flex items-center justify-center">
 
-      <div class="w-full h-100">
+      <div  class="w-full h-100">
+
+        <div v-if="error.message" role="alert">
+          <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+            Erro de Login
+          </div>
+          <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+            <p>{{this.error.message}}</p>
+          </div>
+        </div>
 
 
         <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
@@ -55,13 +64,22 @@
 import axios from "axios";
 import RegisterComponent from "@/components/RegisterComponent.vue";
 
+let isAuthenticated = false;
+
 export default {
   name: "Login",
   components: {RegisterComponent},
   data(){
     return{
-      username: '',
-      password: ''
+      user: {
+        username: '',
+        password: '',
+        role: '',
+        isAuthenticated: isAuthenticated
+      },
+      error: {
+        message: '',
+      }
     }
   },
   methods: {
@@ -72,11 +90,26 @@ export default {
             "password": this.password,
           })
           .then((response) => {
-              console.log(response.data);
+            this.$router.beforeEach((to, from, next) => {
+
+              isAuthenticated = true;
+              this.role = response.data.roles;
+              next();
+
+            });
+          })
+          .catch(error => {
+            switch(error.response.status){
+              case 400:
+                this.error.message = "Erro status 400";
+                break;
+              case 401:
+                this.error.message = "Usuário ou senha inválidos";
+                break;
+            }
           });
     }
-  }
-
+  },
 }
 </script>
 
