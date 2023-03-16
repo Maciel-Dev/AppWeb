@@ -53,8 +53,8 @@
             Google</span>
           </div>
         </button>
-        <p class="mt-8">Need an account? <a href="#" class="text-blue-500 hover:text-blue-700 font-semibold">Create an
-          account</a></p>
+        <p class="mt-8">Need an account? <a class="text-blue-500 hover:text-blue-700 font-semibold"><router-link :to="{path: `/register`}">Create an
+          account</router-link></a></p>
       </div>
     </div>
   </section>
