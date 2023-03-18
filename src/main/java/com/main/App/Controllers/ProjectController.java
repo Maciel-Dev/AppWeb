@@ -1,14 +1,20 @@
 package com.main.App.Controllers;
 
 import com.main.App.Models.Project;
+import com.main.App.Payload.Response.ProjectResponse;
 import com.main.App.Payload.Response.UserInfoResponse;
+import com.main.App.Repositories.ProjectRepository;
 import com.main.App.Service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.expression.ExpressionException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -16,16 +22,18 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired
-    private ProjectService service;
+    ProjectService projectService;
 
     @GetMapping("/get")
     public ResponseEntity<?> getAll(){
+
+
         return ResponseEntity.ok()
-                .body("OK");
+                .body(projectService.listAll());
     }
 
-    @PostMapping("/project")
+    @PostMapping("/post")
     public void add(@RequestBody Project project){
-        service.save(project);
+        projectService.save(project);
     }
 }

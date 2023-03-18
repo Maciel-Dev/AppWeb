@@ -15,11 +15,15 @@ public class Project extends Publication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String theme;
-    private Integer participants;
+    private int participants;
 
-    public Project(String title, String description, String theme, Integer participants){
+    public Project(String title, String description, String theme, int participants) {
         super(title, description);
         this.theme = theme;
         this.participants = participants;
+    }
+
+    public Project() {
+        super();
     }
 }

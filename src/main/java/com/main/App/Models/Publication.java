@@ -10,9 +10,12 @@ import lombok.Setter;
 public class Publication {
     private String title;
     private String description;
-
-    public Publication(String title, String description){
+    public Publication(String title, String description) {
         this.title = title;
         this.description = description;
+    }
+
+    public Publication() {
+
     }
 }
