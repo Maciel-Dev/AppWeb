@@ -90,13 +90,8 @@ export default {
             "password": this.password,
           })
           .then((response) => {
-            this.$router.beforeEach((to, from, next) => {
+            this.$router.push({path: "/"});
 
-              isAuthenticated = true;
-              this.role = response.data.roles;
-              next();
-
-            });
           })
           .catch(error => {
             switch(error.response.status){

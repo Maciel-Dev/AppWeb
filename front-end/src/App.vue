@@ -4,7 +4,8 @@
 
 <script setup>
 import { RouterView } from "vue-router";
-import SiteNavigation from "@/components/SiteNavigation.vue";
+console.log = function() {}
 </script>
+
 
 <style lang="scss" scoped></style>
