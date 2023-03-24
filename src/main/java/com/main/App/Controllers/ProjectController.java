@@ -1,6 +1,7 @@
 package com.main.App.Controllers;
 
 import com.main.App.Models.Project;
+import com.main.App.Payload.Request.ProjectRequest;
 import com.main.App.Payload.Response.ProjectResponse;
 import com.main.App.Payload.Response.UserInfoResponse;
 import com.main.App.Repositories.ProjectRepository;
@@ -27,13 +28,23 @@ public class ProjectController {
     @GetMapping("/get")
     public ResponseEntity<?> getAll(){
 
-
         return ResponseEntity.ok()
                 .body(projectService.listAll());
     }
 
     @PostMapping("/post")
-    public void add(@RequestBody Project project){
-        projectService.save(project);
+    public ResponseEntity<?> add(@RequestBody ProjectRequest project){
+        try {
+            Project newProject = new Project(
+                    project.getTitle(),
+                    project.getDescription(),
+                    project.getTheme(),
+                    project.getParticipants()
+            );
+            projectService.save(newProject);
+            return ResponseEntity.ok().body(newProject);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Cannot create post");
+        }
     }
 }
