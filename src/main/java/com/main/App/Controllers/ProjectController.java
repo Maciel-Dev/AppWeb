@@ -47,4 +47,14 @@ public class ProjectController {
             return ResponseEntity.badRequest().body("Cannot create post");
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        try{
+            projectService.delete(id);
+            return ResponseEntity.ok().body("Project deleted");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Cannot delete project");
+        }
+    }
 }
