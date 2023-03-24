@@ -1,5 +1,6 @@
 package com.main.App.Payload.Request;
 
+import jakarta.persistence.Inheritance;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
