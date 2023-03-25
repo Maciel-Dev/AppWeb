@@ -20,9 +20,6 @@ public class JwtUtils {
     @Value("$(WebApp.app.jwtSecret)")
     private String jwtSecret;
 
-//    @Value("$(WebApp.app.jwtExpirationMs)")
-//    private int jwtExpirationMs;
-
     @Value("$(WebApp.app.jwtCookieName)")
     private String jwtCookie;
 
@@ -42,12 +39,19 @@ public class JwtUtils {
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal)
     {
         String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-        return ResponseCookie.from("token" ,jwt).path("/api").maxAge(24*60*60).httpOnly(true).build();
+        return ResponseCookie.from("token", jwt)
+                .path("/")
+                .maxAge(24*60*60)
+                .httpOnly(true)
+                .sameSite("Lax")
+                .secure(false)
+                .domain("localhost")
+                .build();
     }
 
     public ResponseCookie getCleanJwtCookie()
     {
-        return ResponseCookie.from("token", null).path("/api").build();
+        return ResponseCookie.from("token", null).path("/").build();
     }
 
     public String getUserNameFromJwtToken(String token)
@@ -83,7 +87,7 @@ public class JwtUtils {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + 8000000))
-                .signWith(SignatureAlgorithm.HS256, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 }

@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/projects")
+@CrossOrigin
 public class ProjectController {
 
     @Autowired
@@ -26,8 +26,6 @@ public class ProjectController {
 
     @GetMapping("/get")
     public ResponseEntity<?> getAll(){
-
-
         return ResponseEntity.ok()
                 .body(projectService.listAll());
     }

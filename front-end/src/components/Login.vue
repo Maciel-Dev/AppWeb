@@ -90,8 +90,11 @@ export default {
             "password": this.password,
           })
           .then((response) => {
-            this.$router.push({path: "/"});
+            if(response.status === 200){
+              // document.cookie = "token="+ response.data.token +"; expires=session;  path=/ ; domain= localhost"
 
+              this.$router.push({path:"/"});
+            }
           })
           .catch(error => {
             switch(error.response.status){

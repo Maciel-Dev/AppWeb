@@ -179,10 +179,10 @@ export default {
     }
   },
   methods: {
-    getProjects: function(event){
+    getProjects: async function(event){
       axios
           .get("http://localhost:8082/api/projects/get", {
-
+            withCredentials: true
           })
           .then((response) => {
             console.log(response.data);
