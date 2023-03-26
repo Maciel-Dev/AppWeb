@@ -3,6 +3,7 @@ package com.main.App.Models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,11 +17,12 @@ uniqueConstraints = {
 })
 @Getter
 @Setter
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String firstname;
+    private String lastname;
     private String email;
     private String password;
 
@@ -32,9 +34,10 @@ public class User {
 
     public User() {}
 
-    public User(String username, String email, String password)
+    public User(String firstname, String lastname, String email, String password)
     {
-        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
     }
