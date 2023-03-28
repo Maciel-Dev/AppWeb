@@ -181,8 +181,10 @@ export default {
   methods: {
     getProjects: async function(event){
       axios
-          .get("http://localhost:8082/api/projects/get", {
-            withCredentials: true
+          .get("http://localhost:8082/api/auth/projects/get", {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem("token"),
+            }
           })
           .then((response) => {
             console.log(response.data);
