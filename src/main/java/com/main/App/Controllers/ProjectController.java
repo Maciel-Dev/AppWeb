@@ -27,10 +27,7 @@ public class ProjectController {
 
     @GetMapping("/get")
     public ResponseEntity<?> getAll(){
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/Maciel
         return ResponseEntity.ok()
                 .body(projectService.listAll());
     }
