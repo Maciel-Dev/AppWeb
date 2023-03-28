@@ -24,8 +24,8 @@
 
         <form class="mt-6" @submit.prevent="postUser">
           <div>
-            <label class="block text-gray-700">Username</label>
-            <input v-model="username" type="text" name="" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
+            <label class="block text-gray-700">Email</label>
+            <input v-model="email" type="text" name="" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
           </div>
 
           <div class="mt-4">
@@ -66,15 +66,18 @@ import RegisterComponent from "@/components/RegisterComponent.vue";
 
 let isAuthenticated = false;
 
+let token = '';
+
 export default {
   name: "Login",
   components: {RegisterComponent},
   data(){
     return{
       user: {
-        username: '',
+        email: '',
         password: '',
         role: '',
+        token: '',
         isAuthenticated: isAuthenticated
       },
       error: {
@@ -85,18 +88,14 @@ export default {
   methods: {
     postUser: function(event){
       axios
-          .post("http://localhost:8082/api/auth/signin", {
-            "username": this.username,
+          .post("http://localhost:8082/api/auth/authenticate", {
+            "email": this.email,
             "password": this.password,
           })
           .then((response) => {
-            this.$router.beforeEach((to, from, next) => {
-
-              isAuthenticated = true;
-              this.role = response.data.roles;
-              next();
-
-            });
+            token = response.data;
+            localStorage.setItem("token", response.data.token);
+            this.$router.push({path:"/"});
           })
           .catch(error => {
             switch(error.response.status){
