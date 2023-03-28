@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/auth/projects")
 @CrossOrigin
-@RequestMapping("/api/projects")
 public class ProjectController {
 
     @Autowired
@@ -27,7 +27,10 @@ public class ProjectController {
 
     @GetMapping("/get")
     public ResponseEntity<?> getAll(){
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/Maciel
         return ResponseEntity.ok()
                 .body(projectService.listAll());
     }

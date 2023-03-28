@@ -9,7 +9,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta:{
+        authRequired: 'true',
+      },
     },
     {
       path: '/login',
@@ -23,5 +26,6 @@ const router = createRouter({
     }
   ]
 })
+
 
 export default router
