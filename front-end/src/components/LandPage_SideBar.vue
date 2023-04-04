@@ -199,6 +199,8 @@ export default {
               case 401:
                 this.error.message = "Usuário ou senha inválidos";
                 break;
+              case 403:
+                this.error.message = "Você não tem permissão para realizar a ação."
             }
           });
     }
