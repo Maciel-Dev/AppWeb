@@ -10,27 +10,27 @@
 
       <div  class="w-full h-100">
 
-        <div v-if="error.message" role="alert">
-          <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
-            Erro de Login
-          </div>
-          <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-            <p>{{this.error.message}}</p>
-          </div>
-        </div>
+<!--        <div v-if="error.message" role="alert">-->
+<!--          <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">-->
+<!--            Erro de Login-->
+<!--          </div>-->
+<!--          <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">-->
+<!--            <p>{{this.error.message}}</p>-->
+<!--          </div>-->
+<!--        </div>-->
 
 
         <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
 
-        <form class="mt-6" @submit.prevent="postUser">
+        <form class="mt-6" @submit.prevent="handleLogin">
           <div>
             <label class="block text-gray-700">Email</label>
-            <input v-model="email" type="text" name="" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
+            <input v-model="user.email" type="text" name="email" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
           </div>
 
           <div class="mt-4">
             <label class="block text-gray-700">Password</label>
-            <input v-model="password" type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+            <input v-model="user.password" type="password" name="password" id="" placeholder="Enter Password" minlength="1" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none" required>
           </div>
 
@@ -63,53 +63,53 @@
 <script>
 import axios from "axios";
 import RegisterComponent from "@/components/RegisterComponent.vue";
-
+import User from "@/model/user";
 let isAuthenticated = false;
-
 let token = '';
 
 export default {
   name: "Login",
   components: {RegisterComponent},
   data(){
-    return{
-      user: {
-        email: '',
-        password: '',
-        role: '',
-        token: '',
-        isAuthenticated: isAuthenticated
+    return {
+      user: new User("", ""),
+      loading: false,
+      message: ''
+        }
       },
-      error: {
-        message: '',
-      }
+      computed: {
+        loggedIn(){
+          return this.$store.state.auth.status.loggedIn;
+        }
+      },
+  created() {
+    if(this.loggedIn){
+      this.$router.push('/');
     }
   },
   methods: {
-    postUser: function(event){
-      axios
-          .post("http://localhost:8082/api/auth/authenticate", {
-            "email": this.email,
-            "password": this.password,
-          })
-          .then((response) => {
-            token = response.data;
-            localStorage.setItem("token", response.data.token);
-            this.$router.push({path:"/"});
-          })
-          .catch(error => {
-            switch(error.response.status){
-              case 400:
-                this.error.message = "Erro status 400";
-                break;
-              case 401:
-                this.error.message = "Usuário ou senha inválidos";
-                break;
-            }
+    handleLogin(){
+      this.loading = true;
+      // this.$validator.validadeAll().then(isValid => {
+      //   if(!isValid){
+      //     this.loading = false;
+      //     return;
+      //   }
+
+        if(this.user.email && this.user.senha){
+          this.$store.dispatch('auth/login', this.user).then( () => {
+            this.$router.push("/");
+          },
+          error => {
+            this.loading = false;
+            this.message = (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
           });
+        }
+      },
     }
-  },
-}
+  }
 </script>
 
 <style scoped>

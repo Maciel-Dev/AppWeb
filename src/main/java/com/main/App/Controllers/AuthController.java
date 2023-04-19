@@ -4,6 +4,7 @@ import com.main.App.Payload.Request.AuthenticationRequest;
 import com.main.App.Payload.Request.RegisterRequest;
 import com.main.App.Payload.Response.AuthenticationResponse;
 import com.main.App.Security.services.AuthenticationService;
+import jdk.jfr.ContentType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,6 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
-
         return ResponseEntity.ok(authenticationService.authenticated(request));
     }
 

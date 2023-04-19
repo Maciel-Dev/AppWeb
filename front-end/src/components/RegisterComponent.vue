@@ -54,7 +54,7 @@ export default {
   methods: {
     registerUser: function(event){
       axios
-          .post("http://localhost:8082/api/auth/signup", {
+          .post("http://localhost:8082/api/auth/register", {
             "username": this.username,
             "email": this.email,
             "password": this.password

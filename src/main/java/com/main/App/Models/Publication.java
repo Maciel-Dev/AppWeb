@@ -14,8 +14,6 @@ public class Publication {
         this.title = title;
         this.description = description;
     }
-
     public Publication() {
-
     }
 }

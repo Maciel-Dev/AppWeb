@@ -22,4 +22,6 @@ public class UserInfoResponse {
         this.roles = roles;
         this.token = token;
     }
+
+
 }
