@@ -11,7 +11,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta:{
-        authRequired: 'true',
+        requiresAuth: 'true',
       },
     },
     {
@@ -28,17 +28,17 @@ const router = createRouter({
       path: "/:catchAll(.*)", redirect: '/'
     }
   ]
-})
+});
 
-// router.beforeEach((to, from, next) => {
-//   const publicPages = ['/login', '/register'];
-//   const authRequired = !publicPages.includes(to.path);
-//   const loggedIn = localStorage.getItem('user');
-//
-//   if(authRequired && !loggedIn){
-//     return next('/login');
-//   }
-// })
+router.beforeEach(async (to,from, next) => {
+  const isAuthenticated = localStorage.getItem("user");
+  if(to.meta.requiresAuth && !isAuthenticated){
+    next("/login");
+  }
+  else{
+    next();
+  }
+})
 
 //Criação BeforeEach
 
