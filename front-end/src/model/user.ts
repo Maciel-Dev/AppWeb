@@ -1,8 +1,8 @@
 export default class User{
     email = "";
-    senha = "";
+    password = "";
     constructor(email, senha) {
         this.email = email;
-        this.senha = senha;
+        this.password = senha;
     }
 }

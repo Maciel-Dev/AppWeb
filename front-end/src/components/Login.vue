@@ -38,7 +38,7 @@
             <a href="#" class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
           </div>
 
-          <button type="submit" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
+          <button type="submit" @click="handleLogin" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
               px-4 py-3 mt-6">Log In</button>
         </form>
 
@@ -64,52 +64,40 @@
 import axios from "axios";
 import RegisterComponent from "@/components/RegisterComponent.vue";
 import User from "@/model/user";
-let isAuthenticated = false;
-let token = '';
+import { login } from "@/service/AuthService";
+
 
 export default {
   name: "Login",
   components: {RegisterComponent},
-  data(){
+  data() {
     return {
       user: new User("", ""),
       loading: false,
       message: ''
-        }
-      },
-      computed: {
-        loggedIn(){
-          return this.$store.state.auth.status.loggedIn;
-        }
-      },
-  created() {
-    if(this.loggedIn){
-      this.$router.push('/');
     }
   },
-  methods: {
-    handleLogin(){
-      this.loading = true;
-      // this.$validator.validadeAll().then(isValid => {
-      //   if(!isValid){
-      //     this.loading = false;
-      //     return;
-      //   }
 
-        if(this.user.email && this.user.senha){
-          this.$store.dispatch('auth/login', this.user).then( () => {
-            this.$router.push("/");
-          },
-          error => {
-            this.loading = false;
-            this.message = (error.response && error.response.data && error.response.data.message) ||
-                error.message ||
-                error.toString();
-          });
-        }
-      },
+  methods: {
+    handleLogin() {
+      if(localStorage.getItem("user") != null){
+        // Criar funcionalidade de chamada da API para verificação do TOKEN
+        // Retornar os dados do usuário
+        // Pular carregamento da tela de login
+        this.$router.push({path: "/", props: true});
+      }
+      else{
+        login(this.user)
+            .then((response) => {
+              if(response.status === 200){
+                localStorage.setItem("user", response.data.token);
+                this.$router.push({path: "/", props: true});
+              }
+            })
+      }
     }
   }
+}
 </script>
 
 <style scoped>
