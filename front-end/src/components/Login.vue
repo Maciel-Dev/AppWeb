@@ -10,14 +10,14 @@
 
       <div  class="w-full h-100">
 
-<!--        <div v-if="error.message" role="alert">-->
-<!--          <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">-->
-<!--            Erro de Login-->
-<!--          </div>-->
-<!--          <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">-->
-<!--            <p>{{this.error.message}}</p>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div v-if="this.error.condition" role="alert">
+          <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+            Erro de Login
+          </div>
+          <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+            <p>{{this.error.message}}</p>
+          </div>
+        </div>
 
 
         <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
@@ -74,7 +74,11 @@ export default {
     return {
       user: new User("", ""),
       loading: false,
-      message: ''
+      message: '',
+      error: {
+        condition: false,
+        message: ""
+      }
     }
   },
 
@@ -89,9 +93,14 @@ export default {
       else{
         login(this.user)
             .then((response) => {
+              console.log(response.status)
               if(response.status === 200){
                 localStorage.setItem("user", response.data.token);
                 this.$router.push({path: "/", props: true});
+              }
+              else{
+                this.error.condition = true;
+                this.error.message = "User not Found";
               }
             })
       }

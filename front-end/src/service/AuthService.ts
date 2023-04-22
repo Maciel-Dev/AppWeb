@@ -8,7 +8,7 @@ export async function login(user){
             .post(URL_API_LOGIN + "authenticate", {
                 email: user.email,
                 password: user.password
-            });
+            })
 }
 
 export async function authLogin(user){
