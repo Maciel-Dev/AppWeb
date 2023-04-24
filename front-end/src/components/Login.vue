@@ -65,6 +65,7 @@ import axios from "axios";
 import RegisterComponent from "@/components/RegisterComponent.vue";
 import User from "@/model/user";
 import { login } from "@/service/AuthService";
+import { mapMutations } from "vuex";
 
 
 export default {
@@ -89,6 +90,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations(["setUser"]),
     handleLogin() {
       if(localStorage.getItem("user") != null){
         // Criar funcionalidade de chamada da API para verificação do TOKEN
@@ -103,6 +105,7 @@ export default {
               if(response.status === 200){
                 // localStorage.setItem("user", response.data.token);
                 this.$cookies.set("user", response.data.token);
+                this.setUser(response.data.token);
                 this.$router.push({path: "/", props: true});
               }
               else{
