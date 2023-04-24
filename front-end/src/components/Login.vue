@@ -81,6 +81,12 @@ export default {
       }
     }
   },
+  created: function() {
+    if(this.$cookies.get("user")){
+      //Todo: Create method on API to only receive token to authenticate user
+      this.$router.push({path: "/", props: true});
+    }
+  },
 
   methods: {
     handleLogin() {
@@ -95,7 +101,8 @@ export default {
             .then((response) => {
               console.log(response.status)
               if(response.status === 200){
-                localStorage.setItem("user", response.data.token);
+                // localStorage.setItem("user", response.data.token);
+                this.$cookies.set("user", response.data.token);
                 this.$router.push({path: "/", props: true});
               }
               else{

@@ -1,4 +1,5 @@
 import axios from "axios";
+import app from "@/App.vue";
 
 // URL API LOGIN
 const URL_API_LOGIN = "http://localhost:8082/api/auth/";

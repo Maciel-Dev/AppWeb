@@ -3,19 +3,23 @@ const initializeUser = user ? { status: {loggedIn: true}, user} : { status: {log
 
 export const auth = {
     namespaced: true,
+    //Create model for fullfilled
     state: {
         user: [
             {id: "", name: "", email: ""}
         ]
     },
+    // Create Logic to update the Store
     actions: {
 
     },
+    // Get informations from model created on store
     getters:{
         user(state){
-            return state;
+            return `${state}`;
         }
     },
+    // Create mutations to actions call
     mutations: {
 
     },

@@ -11,7 +11,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta:{
-        requiresAuth: 'true',
+        requiresAuth: 'true'
       },
     },
     {
@@ -31,8 +31,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to,from, next) => {
-  const isAuthenticated = localStorage.getItem("user");
-  if(to.meta.requiresAuth && !isAuthenticated){
+  const isAuthenticated = false;
+
+  if(isAuthenticated){
     next("/login");
   }
   else{
