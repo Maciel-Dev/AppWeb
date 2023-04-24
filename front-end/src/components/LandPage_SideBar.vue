@@ -125,15 +125,19 @@
 
 <script>
 
+import {mapMutations} from "vuex";
+
 export default {
     setup() {
       // const userStore = useUserStore;
       // return { userStore };
     },
   methods: {
+      ...mapMutations(["setUser"]),
     logout(){
       if(this.$cookies.get("user")){
         this.$cookies.remove("user");
+        this.setUser("");
         this.$router.push("/login");
       }
     }
