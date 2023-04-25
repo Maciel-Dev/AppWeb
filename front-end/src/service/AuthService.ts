@@ -15,3 +15,7 @@ export async function login(user){
 export async function authLogin(user){
 
 }
+
+export async function logout(){
+    return await axios.post(URL_API_LOGIN + "logout");
+}

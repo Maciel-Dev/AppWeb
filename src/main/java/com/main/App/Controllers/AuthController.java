@@ -30,6 +30,8 @@ public class AuthController {
         return ResponseEntity.ok(authenticationService.authenticated(request));
     }
 
+
+
     // TODO Criar função para fazer verificação do Token informado
 
 }

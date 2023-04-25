@@ -104,7 +104,7 @@ export default {
               console.log(response.status)
               if(response.status === 200){
                 // localStorage.setItem("user", response.data.token);
-                this.$cookies.set("user", response.data.token);
+                this.$cookies.set("user", response.data.token, 3600);
                 this.setUser(response.data.token);
                 this.$router.push({path: "/", props: true});
               }
