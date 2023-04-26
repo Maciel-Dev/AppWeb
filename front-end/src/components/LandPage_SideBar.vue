@@ -115,14 +115,10 @@
   <div class="grid h-screen place-items-center ml-30">
     <div class="p-4 mt-14">
       <!-- Put Here -->
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
+      <div class="container">
+        <h1>{{ now }}</h1>
+      </div>
+
 
     </div>
   </div>
@@ -133,9 +129,8 @@
 <script>
 
 import {mapMutations} from "vuex";
-import axios from "axios";
-import { getAllProjects } from "@/service/PublicationService";
-import { logout } from "@/service/AuthService";
+import {getAllProjects} from "@/service/PublicationService";
+import {logout} from "@/service/AuthService";
 import Card from "@/components/Card.vue";
 
 export default {
@@ -144,6 +139,19 @@ export default {
       // const userStore = useUserStore;
       // return { userStore };
     },
+  data(){
+    return{
+      info: null
+    }
+  },
+  created(){
+    this.info = getAllProjects();
+  },
+  computed: {
+    now(){
+      return this.info?.Object;
+    }
+  },
   methods: {
       ...mapMutations(["setUser"]),
     logout(){

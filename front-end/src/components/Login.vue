@@ -73,7 +73,7 @@ export default {
   components: {RegisterComponent},
   data() {
     return {
-      user: new User("", ""),
+      user: new User("", "", "", "", ""),
       loading: false,
       message: '',
       error: {
@@ -105,7 +105,11 @@ export default {
               if(response.status === 200){
                 // localStorage.setItem("user", response.data.token);
                 this.$cookies.set("user", response.data.token, 3600);
-                this.setUser(response.data.token);
+                // Atribuição do TOKEN da API ao usuário
+                this.user.token = response.data.token;
+                // Construção do Usuário
+                this.setUser(this.user);
+
                 this.$router.push({path: "/", props: true});
               }
               else{

@@ -6,15 +6,15 @@ export default createStore({
         user: {
             name: "",
             email: "",
-            token: "",
-            authority: ""
+            token: ""
         }
     },
     getters: {},
     actions: {},
     mutations: {
-        setUser(state, token){
-            state.user.token = token;
+        setUser(state, user){
+            state.user.email = user.email;
+            state.user.token = user.token;
         }
     }
 })

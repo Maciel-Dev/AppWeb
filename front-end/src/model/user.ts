@@ -1,8 +1,14 @@
 export default class User{
+    firstName = "";
+    lastName = "";
     email = "";
     password = "";
-    constructor(email, senha) {
+    token = "";
+    constructor(firstName, lastName, email, senha, token) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = senha;
+        this.token = token;
     }
 }
