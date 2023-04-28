@@ -83,6 +83,9 @@ export default {
     }
   },
   created: function() {
+    // Método já faz o redirecionamento ao registrar
+    // Reimplementar verificação de login
+    // Ao sair de registro, pedir confirmação de login
     if(this.$cookies.get("user")){
       //Todo: Create method on API to only receive token to authenticate user
       this.$router.push({path: "/", props: true});
@@ -108,6 +111,10 @@ export default {
                 // Atribuição do TOKEN da API ao usuário
                 this.user.token = response.data.token;
                 // Construção do Usuário
+
+                this.user.firstName = response.data.userDetails.firstname;
+                // this.user.lastName = response.data.userDetails.lastName;
+
                 this.setUser(this.user);
 
                 this.$router.push({path: "/", props: true});

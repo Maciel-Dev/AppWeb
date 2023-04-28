@@ -13,8 +13,7 @@
             </svg>
           </button>
           <a href="https://flowbite.com" class="flex ml-2 md:mr-24">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
-            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Bem vindo, {{ userGetter.name }}</span>
           </a>
         </div>
         <div class="flex items-center">
@@ -22,7 +21,12 @@
             <div>
               <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                <Profile></Profile>
+              </button>
+            </div>
+            <div>
+              <button>
+                <font-awesome-icon :icon="['fas', 'door-open']" size="2xl" style="color: #ffffff;" />
               </button>
             </div>
             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
@@ -117,6 +121,12 @@
       <!-- Put Here -->
       <div class="container">
         <h1>{{ now }}</h1>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
       </div>
 
 
@@ -128,19 +138,21 @@
 
 <script>
 
-import {mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import {getAllProjects} from "@/service/PublicationService";
 import {logout} from "@/service/AuthService";
 import Card from "@/components/Card.vue";
+import Profile from "@/components/header/Profile.vue";
 
 export default {
-  components: {Card},
+  components: {Profile, Card},
     setup() {
       // const userStore = useUserStore;
       // return { userStore };
     },
   data(){
     return{
+      user: null,
       info: null
     }
   },
@@ -148,8 +160,15 @@ export default {
     this.info = getAllProjects();
   },
   computed: {
+    ...mapGetters([
+        'getUser'
+    ]),
     now(){
       return this.info?.Object;
+    },
+    userGetter(){
+      this.user = this.getUser;
+      return this.user;
     }
   },
   methods: {
