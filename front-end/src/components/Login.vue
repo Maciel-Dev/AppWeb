@@ -10,7 +10,7 @@
 
       <div  class="w-full h-100">
 
-        <div v-if="error.message" role="alert">
+        <div v-if="this.error.condition" role="alert">
           <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
             Erro de Login
           </div>
@@ -22,15 +22,15 @@
 
         <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
 
-        <form class="mt-6" @submit.prevent="postUser">
+        <form class="mt-6" @submit.prevent="handleLogin">
           <div>
             <label class="block text-gray-700">Email</label>
-            <input v-model="email" type="text" name="" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
+            <input v-model="user.email" type="text" name="email" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
           </div>
 
           <div class="mt-4">
             <label class="block text-gray-700">Password</label>
-            <input v-model="password" type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+            <input v-model="user.password" type="password" name="password" id="" placeholder="Enter Password" minlength="1" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none" required>
           </div>
 
@@ -38,7 +38,7 @@
             <a href="#" class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
           </div>
 
-          <button type="submit" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
+          <button type="submit" @click="handleLogin" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
               px-4 py-3 mt-6">Log In</button>
         </form>
 
@@ -63,52 +63,70 @@
 <script>
 import axios from "axios";
 import RegisterComponent from "@/components/RegisterComponent.vue";
+import User from "@/model/user";
+import { login } from "@/service/AuthService";
+import { mapMutations } from "vuex";
 
-let isAuthenticated = false;
-
-let token = '';
 
 export default {
   name: "Login",
   components: {RegisterComponent},
-  data(){
-    return{
-      user: {
-        email: '',
-        password: '',
-        role: '',
-        token: '',
-        isAuthenticated: isAuthenticated
-      },
+  data() {
+    return {
+      user: new User("", "", "", "", ""),
+      loading: false,
+      message: '',
       error: {
-        message: '',
+        condition: false,
+        message: ""
       }
     }
   },
-  methods: {
-    postUser: function(event){
-      axios
-          .post("http://localhost:8082/api/auth/authenticate", {
-            "email": this.email,
-            "password": this.password,
-          })
-          .then((response) => {
-            token = response.data;
-            localStorage.setItem("token", response.data.token);
-            this.$router.push({path:"/"});
-          })
-          .catch(error => {
-            switch(error.response.status){
-              case 400:
-                this.error.message = "Erro status 400";
-                break;
-              case 401:
-                this.error.message = "Usuário ou senha inválidos";
-                break;
-            }
-          });
+  created: function() {
+    // Método já faz o redirecionamento ao registrar
+    // Reimplementar verificação de login
+    // Ao sair de registro, pedir confirmação de login
+    if(this.$cookies.get("user")){
+      //Todo: Create method on API to only receive token to authenticate user
+      this.$router.push({path: "/", props: true});
     }
   },
+
+  methods: {
+    ...mapMutations(["setUser"]),
+    handleLogin() {
+      if(localStorage.getItem("user") != null){
+        // Criar funcionalidade de chamada da API para verificação do TOKEN
+        // Retornar os dados do usuário
+        // Pular carregamento da tela de login
+        this.$router.push({path: "/", props: true});
+      }
+      else{
+        login(this.user)
+            .then((response) => {
+              console.log(response.status)
+              if(response.status === 200){
+                // localStorage.setItem("user", response.data.token);
+                this.$cookies.set("user", response.data.token, 3600);
+                // Atribuição do TOKEN da API ao usuário
+                this.user.token = response.data.token;
+                // Construção do Usuário
+
+                this.user.firstName = response.data.userDetails.firstname;
+                // this.user.lastName = response.data.userDetails.lastName;
+
+                this.setUser(this.user);
+
+                this.$router.push({path: "/", props: true});
+              }
+              else{
+                this.error.condition = true;
+                this.error.message = "User not Found";
+              }
+            })
+      }
+    }
+  }
 }
 </script>
 

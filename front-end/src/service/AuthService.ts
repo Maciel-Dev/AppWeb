@@ -1,34 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
+import app from "@/App.vue";
 
-const API_URL = 'http://localhost:8082/api/auth/';
+// URL API LOGIN
+const URL_API_LOGIN = "http://localhost:8082/api/auth/";
 
-class AuthService{
-    login(user: { username: any; password: any; }){
-        return axios
-            .post(API_URL + 'signin', {
-                username: user.username,
-                password: user.password
-            })
-            .then(response => {
-                if(response.data.accessToken){
-                    localStorage.setItem('user', JSON.stringify(response.data));
-                }
-
-                return response.data;
-            });
-    }
-    logout(){
-        localStorage.removeItem('user');
-    }
-
-    register(user: { username: any; email: any; password: any; }){
-        return axios
-            .post(API_URL+'signup', {
-                username: user.username,
+export async function login(user){
+    return await axios
+            .post(URL_API_LOGIN + "authenticate", {
                 email: user.email,
                 password: user.password
             })
-    }
 }
 
-export default new AuthService();
+export async function authLogin(user){
+
+}
+
+export async function logout(){
+    return await axios.post(URL_API_LOGIN + "logout");
+}

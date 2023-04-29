@@ -11,7 +11,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta:{
-        authRequired: 'true',
+        requiresAuth: 'true'
       },
     },
     {
@@ -23,9 +23,24 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView
+    },
+    {
+      path: "/:catchAll(.*)", redirect: '/'
     }
   ]
+});
+
+router.beforeEach(async (to,from, next) => {
+  const isAuthenticated = false;
+
+  if(isAuthenticated){
+    next("/login");
+  }
+  else{
+    next();
+  }
 })
 
+//Criação BeforeEach
 
 export default router

@@ -27,9 +27,9 @@ public class User implements UserDetails {
     private Integer id;
     private String firstname;
     private String lastname;
-
     private String email;
     private String password;
+    private String img_profile;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -122,5 +122,13 @@ public class User implements UserDetails {
 
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    public String getImg_profile() {
+        return img_profile;
+    }
+
+    public void setImg_profile(String img_profile) {
+        this.img_profile = img_profile;
     }
 }
