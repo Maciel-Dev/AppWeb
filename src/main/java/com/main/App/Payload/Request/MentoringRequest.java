@@ -3,7 +3,7 @@ package com.main.App.Payload.Request;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Builder
 @AllArgsConstructor
@@ -18,5 +18,5 @@ public class MentoringRequest {
     @NotBlank
     private String discipline;
     @NotBlank
-    private LocalDateTime duration;
+    private LocalTime duration;
 }

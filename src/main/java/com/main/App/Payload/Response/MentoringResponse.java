@@ -2,8 +2,7 @@ package com.main.App.Payload.Response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Builder
 @AllArgsConstructor
@@ -11,8 +10,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class MentoringResponse {
+    private Long id;
     private String title;
     private String description;
     private String discipline;
-    private LocalDateTime duration;
+    private LocalTime duration;
 }
