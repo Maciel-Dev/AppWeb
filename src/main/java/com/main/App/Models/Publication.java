@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 @Getter
 @Setter
 public class Publication {
