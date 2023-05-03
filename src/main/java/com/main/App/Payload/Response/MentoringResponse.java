@@ -1,8 +1,7 @@
-package com.main.App.Payload.Request;
+package com.main.App.Payload.Response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
 import java.time.LocalTime;
 
 @Builder
@@ -10,13 +9,10 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MentoringRequest {
-    @NotBlank
+public class MentoringResponse {
+    private Long id;
     private String title;
-    @NotBlank
     private String description;
-    @NotBlank
     private String discipline;
-    @NotBlank
     private LocalTime duration;
 }

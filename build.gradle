@@ -33,8 +33,8 @@ dependencies {
 	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
 
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	compileOnly 'org.projectlombok:lombok'
 	compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'

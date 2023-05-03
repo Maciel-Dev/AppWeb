@@ -1,20 +1,19 @@
-package com.main.App.Payload.Request;
+package com.main.App.Payload.Response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProjectRequest {
-    @NotBlank
+public class EventResponse {
+    private Long id;
     private String title;
-    @NotBlank
     private String description;
-    @NotBlank
-    private String theme;
-    @NotBlank
-    private int participants;
+    private LocalDateTime dateTime;
+    private String type;
 }

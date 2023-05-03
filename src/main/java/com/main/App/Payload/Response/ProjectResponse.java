@@ -1,16 +1,22 @@
 package com.main.App.Payload.Response;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class ProjectResponse {
-    private List<?> list;
+    private Long id;
+    private String title;
 
-    public ProjectResponse(List<?> list){
-        this.list = list;
-    }
+    private String description;
+
+    private String theme;
+
+    private int participants;
 }

@@ -19,6 +19,6 @@ public class RegisterRequest {
     private String lastname;
     private String email;
     private String password;
-    private MultipartFile file;
+//    private MultipartFile file;
 
 }
