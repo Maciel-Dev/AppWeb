@@ -10,5 +10,6 @@ export default class User{
         this.email = email;
         this.password = senha;
         this.token = token;
+
     }
 }

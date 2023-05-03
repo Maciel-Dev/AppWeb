@@ -12,7 +12,7 @@
           <a href="#pablo" class="hover:bg-cyan-900 rounded hover:text-neutral-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-slate-700">
             Another action
           </a>
-          <a href="#pablo" class="hover:bg-red-600 rounded hover:text-neutral-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-slate-700">
+          <a class="hover:bg-red-600 rounded hover:text-neutral-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-slate-700" @click="userLogout">
             Logout
           </a>
           <div class="h-0 my-2 border border-solid border-t-0 border-slate-800 opacity-25"></div>
@@ -29,6 +29,7 @@
 
 import { createPopper } from "@popperjs/core";
 import {mapGetters} from "vuex";
+import {logout} from "@/service/AuthService";
 
 export default {
   name: "Profile",
@@ -55,6 +56,10 @@ export default {
           placement: "bottom-start"
         });
       }
+    },
+    userLogout() {
+      logout();
+      this.$router.push({path:"/login"});
     }
   }
 }

@@ -35,6 +35,7 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .img_profile(request.getFile().getOriginalFilename()) // Salva o nome da Imagem no Banco de Dados
                 .role(Role.USER)
                 .build();
 
