@@ -1,22 +1,20 @@
-package com.main.App.Payload.Response;
+package com.main.App.Payload.Request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProjectResponse {
-    private Long id;
+public class ProjectRequest {
+    @NotBlank
     private String title;
-
+    @NotBlank
     private String description;
-
+    @NotBlank
     private String theme;
-
+    @NotBlank
     private int participants;
 }

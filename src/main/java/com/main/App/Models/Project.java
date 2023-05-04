@@ -8,12 +8,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "projects")
+@PrimaryKeyJoinColumn(name = "id")
 @Getter
 @Setter
 public class Project extends Publication {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String theme;
     private int participants;
 

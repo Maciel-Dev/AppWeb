@@ -2,21 +2,17 @@ package com.main.App.Payload.Response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
-import java.util.List;
+import java.time.LocalTime;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProjectResponse {
+public class MentoringResponse {
     private Long id;
     private String title;
-
     private String description;
-
-    private String theme;
-
-    private int participants;
+    private String discipline;
+    private LocalTime duration;
 }
