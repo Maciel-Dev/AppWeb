@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -13,4 +14,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class AuthenticationResponse {
     private UserDetails userDetails;
     private String token;
+    private String multipartFile;
 }

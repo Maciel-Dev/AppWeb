@@ -1,9 +1,6 @@
 package com.main.App.Payload.Request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.annotation.MultipartConfig;
@@ -13,12 +10,14 @@ import javax.servlet.annotation.MultipartConfig;
 @AllArgsConstructor
 @NoArgsConstructor
 @MultipartConfig
+@Getter
+@Setter
 public class RegisterRequest {
 
     private String firstname;
     private String lastname;
     private String email;
     private String password;
-//    private MultipartFile file;
+    private MultipartFile file_image;
 
 }
