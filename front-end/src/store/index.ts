@@ -6,7 +6,8 @@ export default createStore({
         user: {
             name: "",
             email: "",
-            token: ""
+            token: "",
+            img_profile: ""
         }
     },
     getters: {
@@ -17,8 +18,9 @@ export default createStore({
     actions: {},
     mutations: {
         setUser(state, user){
-            state.user.name = user.firstName;
+            state.user.name = user.firstname;
             state.user.email = user.email;
+            state.user.img_profile = user.img_profile;
             state.user.token = user.token;
         }
     }

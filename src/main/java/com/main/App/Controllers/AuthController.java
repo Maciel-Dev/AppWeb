@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 @RestController
@@ -28,12 +29,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@ModelAttribute RegisterRequest request) throws IllegalStateException, IOException {
         Files.createDirectories(root);
-        Files.copy(request.getFile_image().getInputStream(), this.root.resolve(Objects.requireNonNull(request.getFile_image().getOriginalFilename())));
+        Files.copy(request.getFile_image().getInputStream(), this.root.resolve(Objects.requireNonNull(request.getFile_image().getOriginalFilename())), StandardCopyOption.REPLACE_EXISTING);
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) throws IOException {
         return ResponseEntity.ok(authenticationService.authenticated(request));
     }
 

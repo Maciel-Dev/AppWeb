@@ -6,7 +6,7 @@
           <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Create and account
           </h1>
-          <form class="space-y-4 md:space-y-6" @submit.prevent="registerUser">
+          <form class="space-y-4 md:space-y-6" @submit.prevent="registerUser" enctype="multipart/form-data">
             <div>
               <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
               <input v-model = "user.firstName" type="text" name="firstName" id="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="First Name" required="">
@@ -25,7 +25,7 @@
             </div>
             <div>
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-              <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="files" type="file" ref="uploadImage" @change="onImageUpload()">
+              <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help"  id="files" type="file" ref="uploadImage" @change="onImageUpload()">
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
             </div>
 
@@ -73,7 +73,14 @@ export default {
     // },
     registerUser: function(event){
       this.form_data = new FormData();
-      this.form_data.append("request", this.user);
+      this.form_data_image = new FormData();
+      this.form_data.append("firstname", this.user.firstName);
+      this.form_data.append("lastname", this.user.lastName);
+      this.form_data.append("email", this.user.email);
+      this.form_data.append("password", this.user.password);
+      this.form_data.append("file_image", this.user.file_image);
+      // this.form_data = new FormData();
+      // this.form_data.append("request", this.user);
       register(this.form_data);
 
       this.$router.push("/login");
