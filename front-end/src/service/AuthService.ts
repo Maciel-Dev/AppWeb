@@ -1,5 +1,4 @@
 import axios from "axios";
-import app from "@/App.vue";
 
 // URL API LOGIN
 // Ao realizar TUNNEL, alterar apenas a URL para teste em outros dispositivos
@@ -7,26 +6,24 @@ import app from "@/App.vue";
 const URL_API_LOGIN = "http://localhost:8082/api/auth/";
 
 
-export async function login(user){
+export async function login(user) {
     return await axios
-            .post(URL_API_LOGIN + "authenticate", {
-                email: user.email,
-                password: user.password
-            })
-}
-
-export async function register(user){
-    console.log(user);
-    return await axios
-        .post(URL_API_LOGIN + "register", {
-            "firstname": user.firstName,
-            "lastname": user.lastName,
-            "email": user.email,
-            "password": user.password,
-            "file": user.file_image
+        .post(URL_API_LOGIN + "authenticate", {
+            email: user.email,
+            password: user.password
         })
+
+
 }
 
-export async function logout(){
+export async function register(request, image) {
+
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+    return await axios
+        .post(URL_API_LOGIN + "register", request, config)
+}
+
+export async function logout() {
     return await axios.post(URL_API_LOGIN + "logout");
 }

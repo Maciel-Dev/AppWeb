@@ -4,15 +4,12 @@ import com.main.App.Payload.Request.AuthenticationRequest;
 import com.main.App.Payload.Request.RegisterRequest;
 import com.main.App.Payload.Response.AuthenticationResponse;
 import com.main.App.Security.services.AuthenticationService;
-import jdk.jfr.ContentType;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,9 +26,9 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@ModelAttribute RegisterRequest request) throws IOException {
-//        Files.createDirectories(root);
-//        Files.copy(multipartFile.getInputStream(), this.root.resolve(Objects.requireNonNull(multipartFile.getOriginalFilename())));
+    public ResponseEntity<AuthenticationResponse> register(@ModelAttribute RegisterRequest request) throws IllegalStateException, IOException {
+        Files.createDirectories(root);
+        Files.copy(request.getFile_image().getInputStream(), this.root.resolve(Objects.requireNonNull(request.getFile_image().getOriginalFilename())));
         return ResponseEntity.ok(authenticationService.register(request));
     }
 

@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,7 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .img_profile(request.getFile().getOriginalFilename()) // Salva o nome da Imagem no Banco de Dados
+                .img_profile(request.getFile_image().getOriginalFilename()) // Salva o nome da Imagem no Banco de Dados
                 .role(Role.USER)
                 .build();
 
