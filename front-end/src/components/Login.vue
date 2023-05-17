@@ -73,7 +73,7 @@ export default {
   components: {RegisterComponent},
   data() {
     return {
-      user: new User("", "", "", "", "", ""),
+      user: new User("", "", "", "", "", "", ""),
       loading: false,
       message: '',
       error: {
@@ -112,9 +112,17 @@ export default {
                 this.user.token = response.data.token;
                 // Construção do Usuário
 
+                this.user.id = response.data.userDetails.id;
                 this.user.firstname = response.data.userDetails.firstname;
                 this.user.email = response.data.userDetails.email;
                 this.user.img_profile = response.data.userDetails.img_profile;
+                this.user.img_blob = response.data.multipartFile;
+
+
+                // const byteArray = new Uint8Array(response.data.multipartFile);
+                // // Create blob
+                // const blob = new Blob([byteArray], {type: contentType});
+
                 // this.user.lastName = response.data.userDetails.lastName;
 
                 this.setUser(this.user);

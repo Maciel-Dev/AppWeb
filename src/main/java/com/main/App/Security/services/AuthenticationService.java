@@ -10,6 +10,7 @@ import com.main.App.Security.jwt.JwtService;
 import io.micrometer.core.instrument.util.IOUtils;
 import io.micrometer.core.ipc.http.HttpSender;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
@@ -19,16 +20,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.tools.FileObject;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.PasswordAuthentication;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -61,23 +65,36 @@ public class AuthenticationService {
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
 
-        final Path root = Paths.get("public/uploads/");
 
-        //Get image
+        // Lógica de Implementação de Imagem para o Front
+        // Enviando via Base 64
+        // Fazendo o encode
+        // Renderizar como 64 no front
+        // -> Tamanho máximo da imagem é de 20 megas
+        // Tentar rasterização para diminuir o tamanho
 
-        File f = new File(root+user.getImg_profile());
-        String imageString = null;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        BufferedImage image = ImageIO.read(f);
-        ImageIO.write(image, "jpg", bos);
-        byte[] imageBytes = bos.toByteArray();
-
+//        File imagefile = new File("public/uploads/" + user.getImg_profile());
+//        InputStream inputStream = new FileInputStream(imagefile);
+//
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//
+//        byte[] buffer = new byte[20480]; // Regulador do tamanho do arquivo
+//        int bytesRead;
+//        //Rever lógica
+//
+//        while((bytesRead = inputStream.read(buffer)) != -1){
+//            outputStream.write(buffer, 0, bytesRead);
+//        }
+//
+//        byte[] imageBytes = outputStream.toByteArray();
+//
+//        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 
         return AuthenticationResponse.builder()
                 .userDetails(user)
                 .token(jwtToken)
-//                .multipartFile()
+                .multipartFile(user.getImg_profile())
                 .build();
     }
 }

@@ -15,4 +15,5 @@ public class AuthenticationResponse {
     private UserDetails userDetails;
     private String token;
     private String multipartFile;
+    private byte[] image_blob;
 }

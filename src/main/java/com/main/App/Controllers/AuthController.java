@@ -5,11 +5,14 @@ import com.main.App.Payload.Request.RegisterRequest;
 import com.main.App.Payload.Response.AuthenticationResponse;
 import com.main.App.Security.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,7 +38,15 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) throws IOException {
-        return ResponseEntity.ok(authenticationService.authenticated(request));
+        // Lógica para ler a imagem do local adequado
+
+
+        AuthenticationResponse auth = authenticationService.authenticated(request);
+
+        if (auth != null) {
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + auth.getMultipartFile()).body(authenticationService.authenticated(request));
+        }
+        return (ResponseEntity<AuthenticationResponse>) ResponseEntity.status(403);
     }
 
 //    @PostMapping("/logout")

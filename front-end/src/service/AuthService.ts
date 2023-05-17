@@ -12,10 +12,7 @@ export async function login(user) {
             email: user.email,
             password: user.password
         })
-
-
 }
-
 export async function register(request, image) {
 
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
