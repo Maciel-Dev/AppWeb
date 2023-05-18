@@ -1,6 +1,9 @@
 package com.main.App.Service;
 
 import com.main.App.Models.Event;
+import com.main.App.Models.TypePublication;
+import com.main.App.Payload.Request.EventRequest;
+import com.main.App.Payload.Response.EventResponse;
 import com.main.App.Repositories.EventRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,21 +15,39 @@ import java.util.List;
 @Transactional
 public class EventService {
     @Autowired
-    private EventRepository er;
+    private EventRepository eventRepository;
 
     public Event save(Event event){
-        return er.save(event);
+        return eventRepository.save(event);
     }
 
     public List<Event> findAll(){
-        return er.findAll();
+        return eventRepository.findAll();
     }
 
     public Event findById(Long id){
-        return er.findById(id).orElseThrow(() -> new RuntimeException("Event not found!"));
+        return eventRepository.findById(id).orElseThrow(() -> new RuntimeException("Event not found!"));
     }
 
     public void delete(Long id){
-        er.deleteById(id);
+        eventRepository.deleteById(id);
+    }
+
+    public EventResponse adicionarEvento(EventRequest eventRequest){
+        var event = Event.builder()
+                .type(String.valueOf(TypePublication.EVENTO))
+                .title(eventRequest.getTitle())
+                .description(eventRequest.getDescription())
+                .dateTime(eventRequest.getDateTime())
+                .build();
+
+        eventRepository.save(event);
+
+        return EventResponse.builder()
+                .type(String.valueOf(TypePublication.EVENTO))
+                .title(eventRequest.getTitle())
+                .description(eventRequest.getDescription())
+                .dateTime(eventRequest.getDateTime())
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.main.App.Payload.Request;
 
+import com.main.App.Models.TypePublication;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -18,5 +19,5 @@ public class EventRequest {
     @NotBlank
     private LocalDateTime dateTime;
     @NotBlank
-    private String type;
+    private TypePublication type;
 }

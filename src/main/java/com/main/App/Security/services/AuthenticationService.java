@@ -53,6 +53,7 @@ public class AuthenticationService {
                 .build();
 
         repository.save(user);
+
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .userDetails(user)
@@ -65,31 +66,6 @@ public class AuthenticationService {
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
 
-
-        // Lógica de Implementação de Imagem para o Front
-        // Enviando via Base 64
-        // Fazendo o encode
-        // Renderizar como 64 no front
-        // -> Tamanho máximo da imagem é de 20 megas
-        // Tentar rasterização para diminuir o tamanho
-
-
-//        File imagefile = new File("public/uploads/" + user.getImg_profile());
-//        InputStream inputStream = new FileInputStream(imagefile);
-//
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//
-//        byte[] buffer = new byte[20480]; // Regulador do tamanho do arquivo
-//        int bytesRead;
-//        //Rever lógica
-//
-//        while((bytesRead = inputStream.read(buffer)) != -1){
-//            outputStream.write(buffer, 0, bytesRead);
-//        }
-//
-//        byte[] imageBytes = outputStream.toByteArray();
-//
-//        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 
         return AuthenticationResponse.builder()
                 .userDetails(user)
