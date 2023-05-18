@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "contacts")
+@Table(name = "social_networks")
 @Getter
 @Setter
-public class Contact {
+public class SocialNetwork {
     @Id
     @GeneratedValue
     private Long id;
@@ -16,20 +16,14 @@ public class Contact {
     private String instagram;
     private String telegram;
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "fk_perfil")
+    private Perfil perfil;
 
-    @OneToOne
-    @JoinColumn(name = "telephone_id")
-    private Telephone telephone;
-
-
-    public Contact(Long id, String linkedin, String instagram, String telegram, User user, Telephone telephone) {
+    public SocialNetwork(Long id, String linkedin, String instagram, String telegram, Perfil perfil) {
         this.id = id;
         this.linkedin = linkedin;
         this.instagram = instagram;
         this.telegram = telegram;
-        this.user = user;
-        this.telephone = telephone;
+        this.perfil = perfil;
     }
 }

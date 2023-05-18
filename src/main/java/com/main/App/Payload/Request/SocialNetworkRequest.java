@@ -8,11 +8,11 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ContactRequest {
+public class SocialNetworkRequest {
     private Long id;
     private String linkedin;
     private String instagram;
     private String telegram;
     @NotBlank
-    private Long userId;
+    private Long perfilID;
 }
