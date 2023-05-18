@@ -15,6 +15,11 @@ public class PerfilController {
     @Autowired
     private PerfilService ps;
 
+    @GetMapping("/get/{userId}")
+    public ResponseEntity<PerfilResponse> getUserPerfil(@PathVariable Long userId){
+        return ResponseEntity.status(HttpStatus.OK).body(ps.getPerfilByUser(userId));
+    }
+
     @PostMapping("/post")
     public ResponseEntity<PerfilResponse> add(@RequestBody PerfilRequest pr){
         return ResponseEntity.status(HttpStatus.CREATED).body(ps.create(pr));

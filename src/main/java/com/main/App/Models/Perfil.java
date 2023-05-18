@@ -3,6 +3,7 @@ package com.main.App.Models;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "perfils")
+@NoArgsConstructor
 @Getter
 @Setter
 public class Perfil {

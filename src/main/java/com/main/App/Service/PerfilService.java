@@ -18,6 +18,18 @@ public class PerfilService {
     @Autowired
     private UserRepository ur;
 
+    public PerfilResponse getPerfilByUser(Long fk){
+        Perfil perfil = pr.findPerfilByUser(fk);
+
+        PerfilResponse response = PerfilResponse.builder()
+                .id(perfil.getId())
+                .biography(perfil.getBiography())
+                .creationDate(perfil.getCreationDate())
+                .fkUser(perfil.getUser().getId())
+                .build();
+        return response;
+    }
+
     public PerfilResponse create(PerfilRequest request){
         User user = ur.findById(request.getFkUser()).get();
         //construção do novo perfil
