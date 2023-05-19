@@ -1,6 +1,5 @@
 package com.main.App.Controllers;
 
-import com.main.App.Models.Telephone;
 import com.main.App.Payload.Request.TelephoneRequest;
 import com.main.App.Payload.Response.TelephoneResponse;
 import com.main.App.Service.TelephoneService;
@@ -8,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -17,40 +18,22 @@ public class TelephoneController {
     @Autowired
     TelephoneService telephoneService;
 
-    @GetMapping("/get")
-    public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok().body(telephoneService.findAll());
-    }
-
-    @GetMapping("/{id}")
-    public Telephone getTelephoneById(@PathVariable Long id){
-        return telephoneService.findById(id);
+    @GetMapping("/get/{perfilFk}")
+    public List<TelephoneResponse> getTelephoneById(@PathVariable Long perfilFk){
+        return ResponseEntity.ok().body(telephoneService.getPhonesByPerfil(perfilFk)).getBody();
     }
 
     @PostMapping("/post")
-    public ResponseEntity<TelephoneResponse> add(@RequestBody TelephoneRequest tp){
-        Telephone telephone = new Telephone(tp.getDdd(), tp.getNumber());
-
-        Telephone newTelephone = telephoneService.save(telephone);
-
-        TelephoneResponse response = new TelephoneResponse(newTelephone.getId(), newTelephone.getDdd(), newTelephone.getNumber());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<TelephoneResponse> add(@RequestBody TelephoneRequest req){
+        return ResponseEntity.status(HttpStatus.CREATED).body(telephoneService.create(req));
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody TelephoneRequest tp){
-        Telephone findTelephone = telephoneService.findById(id);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody TelephoneRequest req){
+        TelephoneResponse res = telephoneService.update(id, req);
 
-        if (findTelephone != null){
-            findTelephone.setDdd(tp.getDdd());
-            findTelephone.setNumber(tp.getNumber());
-
-            Telephone updatedTelephone = telephoneService.save(findTelephone);
-
-            TelephoneResponse response = new TelephoneResponse(updatedTelephone.getId(), updatedTelephone.getDdd(), updatedTelephone.getNumber());
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        if (res != null){
+            return ResponseEntity.status(HttpStatus.CREATED).body(res);
         }else{
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }

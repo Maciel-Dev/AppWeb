@@ -13,4 +13,6 @@ public class TelephoneRequest {
     private Short ddd;
     @NotBlank
     private Integer number;
+    @NotBlank
+    private Long idUser;
 }

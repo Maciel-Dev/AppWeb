@@ -1,14 +1,15 @@
 package com.main.App.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
-@Table(name = "telephone")
+@Table(name = "phones")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 public class Telephone {
@@ -18,10 +19,8 @@ public class Telephone {
     private Short ddd;
     private Integer number;
 
-    public Telephone(Short ddd, Integer number) {
-        this.ddd = ddd;
-        this.number = number;
-    }
+    @OneToOne
+    @JoinColumn(name = "fk_perfil")
+    private Perfil perfil;
 
-    public Telephone() {}
 }
