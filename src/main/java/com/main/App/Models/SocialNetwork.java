@@ -1,11 +1,11 @@
 package com.main.App.Models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "social_networks")
+@NoArgsConstructor
 @Getter
 @Setter
 public class SocialNetwork {
@@ -19,6 +19,7 @@ public class SocialNetwork {
     @JoinColumn(name = "fk_perfil")
     private Perfil perfil;
 
+    @Builder
     public SocialNetwork(Long id, String linkedin, String instagram, String telegram, Perfil perfil) {
         this.id = id;
         this.linkedin = linkedin;

@@ -1,6 +1,5 @@
-package com.main.App.Payload.Request;
+package com.main.App.Payload.Response;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Builder
@@ -8,10 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SocialNetworkRequest {
+public class SocialNetworkResponse {
+    private Long id;
     private String linkedin;
     private String instagram;
     private String telegram;
-    @NotBlank
-    private Long fkPerfil;
 }
