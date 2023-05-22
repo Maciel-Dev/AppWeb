@@ -5,7 +5,9 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 @AllArgsConstructor
 @Entity
@@ -16,11 +18,14 @@ import java.time.LocalDateTime;
 public class Event extends Publication {
     private LocalDateTime dateTime;
     private String type;
+    private Field id;
 
     @Builder
-    public Event(String title, String description, LocalDateTime dateTime, String type) {
+    public Event(String title, String description, String type) throws NoSuchFieldException {
+
         super(title, description);
-        this.dateTime = dateTime;
+        this.id = Publication.class.getSuperclass().getDeclaredField("id");
+        this.dateTime = LocalDateTime.now();
         this.type = type;
     }
 

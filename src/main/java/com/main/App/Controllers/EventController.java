@@ -31,7 +31,7 @@ public class EventController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<EventResponse> add(@RequestBody EventRequest ev){
+    public ResponseEntity<EventResponse> add(@RequestBody EventRequest ev) throws NoSuchFieldException {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventService.adicionarEvento(ev));
     }
 

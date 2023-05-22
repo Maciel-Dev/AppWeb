@@ -33,12 +33,11 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
-    public EventResponse adicionarEvento(EventRequest eventRequest){
+    public EventResponse adicionarEvento(EventRequest eventRequest) throws NoSuchFieldException {
         var event = Event.builder()
                 .type(String.valueOf(TypePublication.EVENTO))
                 .title(eventRequest.getTitle())
                 .description(eventRequest.getDescription())
-                .dateTime(eventRequest.getDateTime())
                 .build();
 
         eventRepository.save(event);
