@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 public class Publication {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String title;
     private String description;

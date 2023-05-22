@@ -29,7 +29,9 @@
           <div class="flex items-center ml-3">
             <new-publication></new-publication>
             <div>
-              <Profile></Profile>
+              <Profile>
+
+              </Profile>
             </div>
             <div
                 id="dropdown-user"
@@ -212,10 +214,10 @@ import {logout} from "@/service/AuthService";
 import Card from "@/components/Card.vue";
 import Profile from "@/components/header/Profile.vue";
 import NewPublication from "@/components/back-drop/newPublication.vue";
-import CardPopup from "@/components/CardPopup/CardPopup.vue";
+// import CardPopup from "@/components/CardPopup/CardPopup.vue";
 
 export default {
-  components: {CardPopup, NewPublication, Profile, Card},
+  components: {NewPublication, Profile, Card},
   setup() {
     // const userStore = useUserStore;
     // return { userStore };
