@@ -2,6 +2,7 @@ package com.main.App.Models;
 
 public enum ERole {
 
-    USER,
-    ADMIN
+    ROLE_USER,
+    ROLE_MOD,
+    ROLE_ADMIN
 }

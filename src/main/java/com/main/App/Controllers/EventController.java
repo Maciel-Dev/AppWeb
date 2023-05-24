@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth/event")
+@RequestMapping("/api/auth/evento")
 @CrossOrigin
 public class EventController {
 
@@ -31,8 +31,8 @@ public class EventController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<EventResponse> add(@RequestBody EventRequest ev) throws NoSuchFieldException {
-        return ResponseEntity.status(HttpStatus.CREATED).body(eventService.adicionarEvento(ev));
+    public ResponseEntity<EventResponse> add(@RequestBody EventRequest Event) throws NoSuchFieldException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventService.adicionarEvento(Event));
     }
 
     //TODO REFAZER UPDATE PASSANDO PARA O PADRÃO DE SERVIÇO E REPOSITÓRIO DO PROJETO

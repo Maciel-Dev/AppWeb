@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.annotation.MultipartConfig;
+import java.util.Set;
 
 @Data
 @Builder
@@ -14,8 +15,10 @@ import javax.servlet.annotation.MultipartConfig;
 @Setter
 public class RegisterRequest {
 
-    private String firstname;
-    private String lastname;
+    private Set<String> roles;
+    private String username;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
     private MultipartFile file_image;

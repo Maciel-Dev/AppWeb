@@ -18,13 +18,13 @@ import java.util.Calendar;
 public class Event extends Publication {
     private LocalDateTime dateTime;
     private String type;
-    private Field id;
+    private Long id;
 
     @Builder
     public Event(String title, String description, String type) throws NoSuchFieldException {
 
         super(title, description);
-        this.id = Publication.class.getSuperclass().getDeclaredField("id");
+//        this.id = Publication.class.getSuperclass().getDeclaredField("id");
         this.dateTime = LocalDateTime.now();
         this.type = type;
     }

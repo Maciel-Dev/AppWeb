@@ -229,7 +229,7 @@ export default {
     }
   },
   created() {
-    this.info = getAllProjects();
+    // this.info = getAllProjects();
   },
   computed: {
     ...mapGetters([
@@ -256,7 +256,7 @@ export default {
     },
     getPublications() {
       // Chamada da camada de serviço
-      getAllProjects();
+      // getAllProjects();
     }
   }
 };
