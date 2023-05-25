@@ -19,5 +19,5 @@ public class EventRequest {
     @NotBlank
     private LocalDateTime dateTime;
     @NotBlank
-    private TypePublication type;
+    private String type;
 }

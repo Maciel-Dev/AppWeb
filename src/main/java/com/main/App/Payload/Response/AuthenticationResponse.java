@@ -13,6 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class AuthenticationResponse {
     private UserDetails userDetails;
+    private String token;
+    private String firstName;
+    private String lastName;
+    private String id_user;
 //    private String token;
 //    private String multipartFile;
 //    private byte[] image_blob;

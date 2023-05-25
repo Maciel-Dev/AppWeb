@@ -42,10 +42,7 @@ import java.io.*;
 import java.net.PasswordAuthentication;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,13 +86,29 @@ public class AuthenticationService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
+        // Usuário do SPRING SECURITY
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> role = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        return AuthenticationResponse.builder().
-                userDetails(userDetails)
-                .build();
+        // Retorna usuário do Banco de Dados
+        Optional<User> user = userRepository.findByUsername(authenticationRequest.getUsername());
+
+        if(user.isPresent()) {
+            return AuthenticationResponse.builder().
+                    userDetails(userDetails)
+                    .token(jwt)
+                    .firstName(user.get().getFirstName())
+                    .lastName(user.get().getLastName())
+                    .id_user(user.get().getId().toString())
+                    .build();
+        }
+        else{
+            return AuthenticationResponse.builder().
+                    userDetails(userDetails)
+                    .token(jwt)
+                    .build();
+        }
     }
 }

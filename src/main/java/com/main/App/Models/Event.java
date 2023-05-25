@@ -24,7 +24,6 @@ public class Event extends Publication {
     public Event(String title, String description, String type) throws NoSuchFieldException {
 
         super(title, description);
-//        this.id = Publication.class.getSuperclass().getDeclaredField("id");
         this.dateTime = LocalDateTime.now();
         this.type = type;
     }
