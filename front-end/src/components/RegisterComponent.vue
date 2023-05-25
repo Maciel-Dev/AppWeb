@@ -8,6 +8,10 @@
           </h1>
           <form class="space-y-4 md:space-y-6" @submit.prevent="registerUser" enctype="multipart/form-data">
             <div>
+              <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+              <input v-model = "user.username" type="text" name="firstName" id="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Username" required="">
+            </div>
+            <div>
               <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
               <input v-model = "user.firstName" type="text" name="firstName" id="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="First Name" required="">
             </div>
@@ -62,7 +66,8 @@ export default {
         lastName: '',
         email: '',
         password: '',
-        file_image: null
+        file_image: null,
+        username: '',
       },
       form_data: null
     }
@@ -74,10 +79,11 @@ export default {
     registerUser: function(event){
       this.form_data = new FormData();
       this.form_data_image = new FormData();
-      this.form_data.append("firstname", this.user.firstName);
-      this.form_data.append("lastname", this.user.lastName);
+      this.form_data.append("firstName", this.user.firstName);
+      this.form_data.append("lastName", this.user.lastName);
       this.form_data.append("email", this.user.email);
       this.form_data.append("password", this.user.password);
+      this.form_data.append("username", this.user.username);
       this.form_data.append("file_image", this.user.file_image);
       // this.form_data = new FormData();
       // this.form_data.append("request", this.user);

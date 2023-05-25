@@ -10,6 +10,9 @@ export default createStore({
             token: "",
             img_profile: "",
             img_blob: ""
+        },
+        publication: {
+
         }
     },
     getters: {
@@ -19,6 +22,7 @@ export default createStore({
         getImg (state){
             return state.user.img_blob;
         }
+
     },
     actions: {},
     mutations: {

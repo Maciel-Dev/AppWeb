@@ -95,6 +95,7 @@ export default {
       PublicationForm.append("description", this.publication.description);
       PublicationForm.append("title", this.publication.title);
       PublicationForm.append("data", new Date().getDate().toString());
+      PublicationForm.append("type", "EVENTO");
       postPublication(this.publication)
           .then((response) => {
             if (response.status === 200) {

@@ -191,13 +191,12 @@
     <div class="p-4 mt-14">
       <!-- Put Here -->
       <div class="container">
-        <h1>{{ now }}</h1>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
+        <ul>
+          <li v-for="item in items" :key="item.message">
+            {{ item.message }}
+          </li>
+        </ul>
+
       </div>
 
     </div>
@@ -209,11 +208,13 @@
 <script>
 
 import {mapGetters, mapMutations} from "vuex";
-import {getAllProjects} from "@/service/PublicationService";
+// import {getAllProjects} from "@/service/PublicationService";
 import {logout} from "@/service/AuthService";
 import Card from "@/components/Card.vue";
 import Profile from "@/components/header/Profile.vue";
 import NewPublication from "@/components/back-drop/newPublication.vue";
+import Publication from "@/model/Publication";
+import {getPublications} from "@/service/PublicationService";
 // import CardPopup from "@/components/CardPopup/CardPopup.vue";
 
 export default {
@@ -225,11 +226,12 @@ export default {
   data() {
     return {
       user: null,
-      info: null
+      info: null,
+      publications: null
     }
   },
   created() {
-    // this.info = getAllProjects();
+    getPublications("evento").then((response) => console.log(response.status))
   },
   computed: {
     ...mapGetters([
@@ -253,10 +255,6 @@ export default {
         logout();
         // this.$router.push("/login");
       }
-    },
-    getPublications() {
-      // Chamada da camada de serviço
-      // getAllProjects();
     }
   }
 };

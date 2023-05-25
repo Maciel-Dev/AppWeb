@@ -8,8 +8,8 @@ const URL_API_LOGIN = "http://localhost:8082/api/auth/";
 
 export async function login(user) {
     return await axios
-        .post(URL_API_LOGIN + "authenticate", {
-            email: user.email,
+        .post(URL_API_LOGIN + "login", {
+            username: user.email,
             password: user.password
         })
 }

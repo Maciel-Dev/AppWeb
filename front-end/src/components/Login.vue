@@ -107,23 +107,12 @@ export default {
               console.log(response.status)
               if(response.status === 200){
                 // localStorage.setItem("user", response.data.token);
-                this.$cookies.set(response.data.userDetails.firstname, response.data.token, 3600);
+                this.$cookies.set("user", response.data.token, 3600);
+                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`; // Determina um cabeçalho padrão para toda requisição
                 // Atribuição do TOKEN da API ao usuário
                 this.user.token = response.data.token;
                 // Construção do Usuário
-
-                this.user.id = response.data.userDetails.id;
-                this.user.firstname = response.data.userDetails.firstname;
-                this.user.email = response.data.userDetails.email;
-                this.user.img_profile = response.data.userDetails.img_profile;
-                this.user.img_blob = response.data.multipartFile;
-
-
-                // const byteArray = new Uint8Array(response.data.multipartFile);
-                // // Create blob
-                // const blob = new Blob([byteArray], {type: contentType});
-
-                // this.user.lastName = response.data.userDetails.lastName;
+                this.user.id = response.data.id_user;
 
                 this.setUser(this.user);
 
