@@ -24,8 +24,8 @@
 
         <form class="mt-6" @submit.prevent="handleLogin">
           <div>
-            <label class="block text-gray-700">Email</label>
-            <input v-model="user.email" type="text" name="email" id="" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
+            <label class="block text-gray-700">Username</label>
+            <input v-model="user.email" type="text" name="username" id="" placeholder="Enter Username" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
           </div>
 
           <div class="mt-4">

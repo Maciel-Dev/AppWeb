@@ -11,9 +11,11 @@ export default createStore({
             img_profile: "",
             img_blob: ""
         },
-        publication: {
-
-        }
+        publication: [{
+            id: "",
+            title: "",
+            description: ""
+        }]
     },
     getters: {
         getUser (state){
@@ -21,6 +23,12 @@ export default createStore({
         },
         getImg (state){
             return state.user.img_blob;
+        },
+        getPublications (state){
+            return state.publication;
+        },
+        getPublicationsLength(state){
+            return state.publication.length;
         }
 
     },
@@ -32,6 +40,9 @@ export default createStore({
             state.user.email = user.email;
             state.user.img_profile = user.img_profile;
             state.user.token = user.token;
+        },
+        setPublication(state, publicationItem){
+            state.publication.unshift(publicationItem);
         }
     }
 })

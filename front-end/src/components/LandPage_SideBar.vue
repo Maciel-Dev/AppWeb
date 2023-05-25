@@ -192,11 +192,10 @@
       <!-- Put Here -->
       <div class="container">
         <ul>
-          <li v-for="item in items" :key="item.message">
-            {{ item.message }}
+          <li v-for="item in this.getPublications" :key="item.id">
+            <Card v-bind=item></Card>
           </li>
         </ul>
-
       </div>
 
     </div>
@@ -213,7 +212,6 @@ import {logout} from "@/service/AuthService";
 import Card from "@/components/Card.vue";
 import Profile from "@/components/header/Profile.vue";
 import NewPublication from "@/components/back-drop/newPublication.vue";
-import Publication from "@/model/Publication";
 import {getPublications} from "@/service/PublicationService";
 // import CardPopup from "@/components/CardPopup/CardPopup.vue";
 
@@ -227,15 +225,31 @@ export default {
     return {
       user: null,
       info: null,
-      publications: null
+      publications: {}
     }
   },
   created() {
-    getPublications("evento").then((response) => console.log(response.status))
+    // Método para carregar Publicações
+    getPublications("evento").then((response) => (this.publications = response.data))
+        .then((response) =>
+            this.publications = this.publications.map((d) => {
+              let publication = {
+                id: d.id,
+                title: d.title,
+                description: d.description,
+                data: d.data,
+                datetime: d.datetime,
+                type: d.type
+              };
+              this.setPublication(publication);
+              return publication;
+            }));
+
   },
   computed: {
     ...mapGetters([
-      'getUser'
+      'getUser',
+        'getPublications'
     ]),
     now() {
       return this.info?.Object;
@@ -246,7 +260,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setUser"]),
+    ...mapMutations(["setUser", "setPublication"]),
     logout() {
       // Alterar verificação para a Store com o armazenamento do cookie
       if (this.$cookies.get("user")) {
@@ -255,6 +269,22 @@ export default {
         logout();
         // this.$router.push("/login");
       }
+    },
+    retrievePublications() {
+      getPublications("evento").then((response) => (this.publications = response.data))
+          .then((response) =>
+          this.publications = this.publications.map((d) => {
+            let publication = {
+              id: d.id,
+              title: d.title,
+              description: d.description,
+              data: d.data,
+              datetime: d.datetime,
+              type: d.type
+            };
+            this.setPublication(publication);
+            return publication;
+          }))
     }
   }
 };
