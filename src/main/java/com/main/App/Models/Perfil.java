@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "perfils")
@@ -25,6 +27,16 @@ public class Perfil {
     @JoinColumn(name = "fk_user")
     private User user;
 
+    @ManyToMany(fetch = FetchType.LAZY,
+        cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "perfil_topics",
+        joinColumns = { @JoinColumn(name = "perfil_id")},
+        inverseJoinColumns = { @JoinColumn(name = "topic_id")})
+    private List<Topic> topics = new ArrayList<>();
+
     @Builder
     public Perfil(Long id, String biography, User user) {
         this.id = id;
@@ -33,6 +45,12 @@ public class Perfil {
         this.user = user;
     }
 
-
+    public void removeTopic(long topicId){
+        Topic topic = this.topics.stream().filter(tp -> tp.getId() == topicId).findFirst().orElse(null);
+        if(topic != null){
+            this.topics.remove(topic);
+            topic.getPerfils().remove(this);
+        }
+    }
 
 }

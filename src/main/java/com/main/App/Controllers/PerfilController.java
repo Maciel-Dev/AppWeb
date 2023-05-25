@@ -2,6 +2,7 @@ package com.main.App.Controllers;
 
 import com.main.App.Payload.Request.PerfilRequest;
 import com.main.App.Payload.Response.PerfilResponse;
+import com.main.App.Payload.Response.TelephoneResponse;
 import com.main.App.Service.PerfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,18 @@ public class PerfilController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<PerfilResponse> add(@RequestBody PerfilRequest pr){
-        return ResponseEntity.status(HttpStatus.CREATED).body(ps.create(pr));
+    public ResponseEntity<PerfilResponse> add(@RequestBody PerfilRequest req){
+        return ResponseEntity.status(HttpStatus.CREATED).body(ps.create(req));
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<PerfilResponse> update(@PathVariable Long id, @RequestBody PerfilRequest req){
+        PerfilResponse res = ps.updatePerfil(id, req);
+
+        if (res != null){
+            return ResponseEntity.status(HttpStatus.OK).body(res);
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        }
     }
 }
