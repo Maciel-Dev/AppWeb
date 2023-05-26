@@ -1,6 +1,7 @@
 package com.main.App.Controllers;
 
 import com.main.App.Payload.Request.AuthenticationRequest;
+import com.main.App.Payload.Request.LoadRequest;
 import com.main.App.Payload.Request.RegisterRequest;
 import com.main.App.Payload.Response.AuthenticationResponse;
 import com.main.App.Payload.Response.LogoutResponse;
@@ -66,6 +67,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody AuthenticationRequest authenticationRequest){
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.login(authenticationRequest));
+    }
+
+    @PostMapping("/loadUser")
+    public ResponseEntity<LogoutResponse> loadUser(@Valid @RequestBody LoadRequest loadRequest){
+        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.loadUser(loadRequest));
     }
 
 //    @PostMapping("/authenticate")

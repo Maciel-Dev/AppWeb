@@ -193,7 +193,9 @@
       <div class="container">
         <ul>
           <li v-for="item in this.getPublications" :key="item.id">
-            <Card v-bind=item></Card>
+            <div v-if="item.title != '' ">
+              <Card :publication-item="item"/>
+            </div>
           </li>
         </ul>
       </div>
@@ -245,11 +247,15 @@ export default {
               return publication;
             }));
 
+    //Verificação de Token
+    if(this.$cookies.get("user") != null){
+
+    }
   },
   computed: {
     ...mapGetters([
       'getUser',
-        'getPublications'
+      'getPublications'
     ]),
     now() {
       return this.info?.Object;
@@ -273,18 +279,18 @@ export default {
     retrievePublications() {
       getPublications("evento").then((response) => (this.publications = response.data))
           .then((response) =>
-          this.publications = this.publications.map((d) => {
-            let publication = {
-              id: d.id,
-              title: d.title,
-              description: d.description,
-              data: d.data,
-              datetime: d.datetime,
-              type: d.type
-            };
-            this.setPublication(publication);
-            return publication;
-          }))
+              this.publications = this.publications.map((d) => {
+                let publication = {
+                  id: d.id,
+                  title: d.title,
+                  description: d.description,
+                  data: d.data,
+                  datetime: d.datetime,
+                  type: d.type
+                };
+                this.setPublication(publication);
+                return publication;
+              }))
     }
   }
 };

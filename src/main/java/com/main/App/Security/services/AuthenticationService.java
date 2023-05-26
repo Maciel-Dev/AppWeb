@@ -1,49 +1,32 @@
 package com.main.App.Security.services;
 
-import com.main.App.Config.SecurityConfiguration;
 import com.main.App.Models.ERole;
 import com.main.App.Models.Role;
 import com.main.App.Models.User;
 import com.main.App.Payload.Request.AuthenticationRequest;
+import com.main.App.Payload.Request.LoadRequest;
 import com.main.App.Payload.Request.RegisterRequest;
 import com.main.App.Payload.Response.AuthenticationResponse;
+import com.main.App.Payload.Response.LogoutResponse;
 import com.main.App.Payload.Response.RegisterResponse;
 import com.main.App.Repositories.RoleRepository;
 import com.main.App.Repositories.UserRepository;
-import com.main.App.Security.jwt.JwtService;
 import com.main.App.Security.jwt.JwtUtils;
 import com.main.App.Service.UserAuthentication.UserDetailsImpl;
-import io.micrometer.core.instrument.util.IOUtils;
-import io.micrometer.core.ipc.http.HttpSender;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.tools.FileObject;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.PasswordAuthentication;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -57,11 +40,12 @@ public class AuthenticationService {
     @Autowired
     RoleRepository roleRepository;
 
-    public RegisterResponse register(RegisterRequest request){
+    public RegisterResponse register(RegisterRequest request) {
         Set<String> strRoles = request.getRoles();
         Set<Role> roles = new HashSet<>();
 
-        Role userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: Role is not found."));;
+        Role userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        ;
 
         roles.add((Role) userRole);
 
@@ -95,7 +79,7 @@ public class AuthenticationService {
         // Retorna usuário do Banco de Dados
         Optional<User> user = userRepository.findByUsername(authenticationRequest.getUsername());
 
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             return AuthenticationResponse.builder().
                     userDetails(userDetails)
                     .token(jwt)
@@ -103,12 +87,22 @@ public class AuthenticationService {
                     .lastName(user.get().getLastName())
                     .id_user(user.get().getId().toString())
                     .build();
-        }
-        else{
+        } else {
             return AuthenticationResponse.builder().
                     userDetails(userDetails)
                     .token(jwt)
                     .build();
         }
+    }
+
+    public LogoutResponse loadUser(LoadRequest loadRequest) {
+        boolean validToken = jwtUtils.validateJwtToken(loadRequest.getToken());
+        if (validToken) {
+            String user = jwtUtils.getUserNameFromJwtToken(loadRequest.getToken());
+            System.out.println(user);
+            return LogoutResponse.builder().message("PASSEI").build();
+        }
+        return LogoutResponse.builder().message("NAO PASSEI").build();
+
     }
 }
