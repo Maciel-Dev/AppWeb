@@ -32,8 +32,8 @@ public class PerfilController {
 
         if (res != null){
             return ResponseEntity.status(HttpStatus.OK).body(res);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+
     }
 }
