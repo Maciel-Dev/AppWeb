@@ -14,6 +14,8 @@ public class ProjectRequest {
     @NotBlank
     private String description;
     @NotBlank
+    private Long perfilFk;
+    @NotBlank
     private String theme;
     @NotBlank
     private int participants;

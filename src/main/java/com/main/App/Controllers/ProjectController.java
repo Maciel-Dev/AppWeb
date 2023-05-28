@@ -3,6 +3,7 @@ package com.main.App.Controllers;
 import com.main.App.Models.Project;
 import com.main.App.Payload.Request.ProjectRequest;
 import com.main.App.Payload.Response.ProjectResponse;
+import com.main.App.Repositories.ProjectRepository;
 import com.main.App.Service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,53 +17,48 @@ public class ProjectController {
 
     @Autowired
     ProjectService projectService;
+    @Autowired
+    ProjectRepository pr;
 
     @GetMapping("/get")
     public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok().body(projectService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.findAll());
     }
 
-    @GetMapping("/{id}")
-        public Project getProjectById(@PathVariable Long id){
-        return projectService.findById(id);
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ProjectResponse> getProjectById(@PathVariable Long id){
+        Project project = pr.findById(id).get();
+
+        //contrução da resposta
+        ProjectResponse response = ProjectResponse.builder()
+                .id(project.getId())
+                .title(project.getTitle())
+                .description(project.getDescription())
+                .perfilFK(project.getPerfil().getId())
+                .theme(project.getTheme())
+                .participants(project.getParticipants())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/post")
-    public ResponseEntity<ProjectResponse> add(@RequestBody ProjectRequest pr){
-        Project project = new Project(pr.getTitle(), pr.getDescription(), pr.getTheme(), pr.getParticipants());
-
-        Project newProject = projectService.save(project);
-
-        ProjectResponse response = new ProjectResponse(newProject.getId(), newProject.getTitle(),
-                newProject.getDescription(), newProject.getTheme(), newProject.getParticipants());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<ProjectResponse> create(@RequestBody ProjectRequest req){
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectService.create(req));
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProjectRequest pr){
-        Project findProject = projectService.findById(id);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProjectRequest req){
+        ProjectResponse response = projectService.update(id, req);
 
-        if (findProject != null){
-            findProject.setTitle(pr.getTitle());
-            findProject.setDescription(pr.getDescription());
-            findProject.setTheme(pr.getTheme());
-            findProject.setParticipants(pr.getParticipants());
-
-            Project updatedProject = projectService.save(findProject);
-
-            ProjectResponse response = new ProjectResponse(updatedProject.getId(), updatedProject.getTitle(),
-                    updatedProject.getDescription(), updatedProject.getTheme(), updatedProject.getParticipants());
-
+        if (response != null){
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable Long id){
-        projectService.delete(id);
+        pr.deleteById(id);
     }
 
 }

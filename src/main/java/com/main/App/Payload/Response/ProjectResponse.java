@@ -1,9 +1,6 @@
 package com.main.App.Payload.Response;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -15,6 +12,8 @@ public class ProjectResponse {
     private String title;
 
     private String description;
+
+    private Long perfilFK;
 
     private String theme;
 

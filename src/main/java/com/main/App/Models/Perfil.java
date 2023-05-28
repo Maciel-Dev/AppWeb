@@ -37,6 +37,9 @@ public class Perfil {
         inverseJoinColumns = { @JoinColumn(name = "topic_id")})
     private List<Topic> topics = new ArrayList<>();
 
+    @OneToMany
+    List <Publication> publications;
+
     @Builder
     public Perfil(Long id, String biography, User user) {
         this.id = id;
