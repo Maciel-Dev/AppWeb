@@ -2,6 +2,7 @@ package com.main.App.Controllers;
 
 import com.main.App.Payload.Request.TelephoneRequest;
 import com.main.App.Payload.Response.TelephoneResponse;
+import com.main.App.Repositories.TelephoneRepository;
 import com.main.App.Service.TelephoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import java.util.List;
 public class TelephoneController {
     @Autowired
     TelephoneService telephoneService;
+    @Autowired
+    TelephoneRepository tr;
 
     @GetMapping("/get/{perfilFk}")
     public List<TelephoneResponse> getTelephoneById(@PathVariable Long perfilFk){
@@ -24,7 +27,7 @@ public class TelephoneController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<TelephoneResponse> add(@RequestBody TelephoneRequest req){
+    public ResponseEntity<TelephoneResponse> create(@RequestBody TelephoneRequest req){
         return ResponseEntity.status(HttpStatus.CREATED).body(telephoneService.create(req));
     }
 
@@ -34,13 +37,12 @@ public class TelephoneController {
 
         if (res != null){
             return ResponseEntity.status(HttpStatus.CREATED).body(res);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){
-        telephoneService.delete(id);
+        tr.deleteById(id);
     }
 }

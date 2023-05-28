@@ -21,7 +21,7 @@ public class TopicController {
         return ResponseEntity.status(HttpStatus.OK).body(tr.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<TopicResponse> getTopicById(@PathVariable Long id){
         Topic topic = tr.findById(id).get();
 

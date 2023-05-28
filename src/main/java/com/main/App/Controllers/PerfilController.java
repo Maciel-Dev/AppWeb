@@ -22,7 +22,7 @@ public class PerfilController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<PerfilResponse> add(@RequestBody PerfilRequest req){
+    public ResponseEntity<PerfilResponse> create(@RequestBody PerfilRequest req){
         return ResponseEntity.status(HttpStatus.CREATED).body(ps.create(req));
     }
 
@@ -34,6 +34,5 @@ public class PerfilController {
             return ResponseEntity.status(HttpStatus.OK).body(res);
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-
     }
 }

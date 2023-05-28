@@ -24,7 +24,7 @@ public class SocialNetworkController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<SocialNetworkResponse> add(@RequestBody SocialNetworkRequest req){
+    public ResponseEntity<SocialNetworkResponse> create(@RequestBody SocialNetworkRequest req){
         return ResponseEntity.status(HttpStatus.CREATED).body(sws.create(req));
     }
 
@@ -34,9 +34,8 @@ public class SocialNetworkController {
 
         if (res != null){
             return ResponseEntity.status(HttpStatus.OK).body(res);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @DeleteMapping("/delete/{id}")
