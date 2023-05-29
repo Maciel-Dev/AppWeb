@@ -25,6 +25,9 @@ public class Topic {
     @ManyToMany(mappedBy = "topics")
     @JsonIgnore
     private List <Perfil> perfils = new ArrayList<>();
+    @ManyToMany
+    @JsonIgnore
+    private List<Publication> publications = new ArrayList<>();
 
     public Topic(){}
 

@@ -37,6 +37,7 @@ public class ProjectController {
                 .perfilFK(project.getPerfil().getId())
                 .theme(project.getTheme())
                 .participants(project.getParticipants())
+                .topics(project.getTopics())
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

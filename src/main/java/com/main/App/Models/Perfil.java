@@ -36,7 +36,6 @@ public class Perfil {
         joinColumns = { @JoinColumn(name = "perfil_id")},
         inverseJoinColumns = { @JoinColumn(name = "topic_id")})
     private List<Topic> topics = new ArrayList<>();
-
     @OneToMany
     List <Publication> publications;
 

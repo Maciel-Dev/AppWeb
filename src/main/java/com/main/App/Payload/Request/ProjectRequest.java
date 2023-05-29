@@ -3,6 +3,8 @@ package com.main.App.Payload.Request;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,4 +21,5 @@ public class ProjectRequest {
     private String theme;
     @NotBlank
     private int participants;
+    private List<Long> topics;
 }

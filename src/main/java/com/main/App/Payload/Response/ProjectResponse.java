@@ -1,6 +1,9 @@
 package com.main.App.Payload.Response;
 
+import com.main.App.Models.Topic;
 import lombok.*;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -18,4 +21,6 @@ public class ProjectResponse {
     private String theme;
 
     private int participants;
+
+    private List<Topic> topics;
 }
