@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/auth/projects")
 @CrossOrigin
@@ -40,6 +43,26 @@ public class ProjectController {
                 .topics(project.getTopics())
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/get/perfil/{perfilFk}")
+    public ResponseEntity<?> getProjectsByPerfilId(@PathVariable Long perfilFk){
+        List<Project> projects = pr.getProjectByPerfil(perfilFk);
+        List<ProjectResponse> projectListResponse = new ArrayList<>();
+
+        for(Project project : projects){
+            ProjectResponse response = ProjectResponse.builder()
+                    .id(project.getId())
+                    .title(project.getTitle())
+                    .description(project.getDescription())
+                    .perfilFK(project.getPerfil().getId())
+                    .theme(project.getTheme())
+                    .participants(project.getParticipants())
+                    .topics(project.getTopics())
+                    .build();
+            projectListResponse.add(response);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(projectListResponse);
     }
 
     @PostMapping("/post")
