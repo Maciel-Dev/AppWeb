@@ -78,8 +78,4 @@ public class TelephoneService {
         }
         return res;
     }
-
-    public void delete(Long id){
-        tp.deleteById(id);
-    }
 }

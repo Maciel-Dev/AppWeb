@@ -30,17 +30,17 @@ public class MentoringController {
         return mentoringService.findById(id);
     }
 
-    @PostMapping("/post")
-    public ResponseEntity<MentoringResponse> add(@RequestBody MentoringRequest mt){
-        Mentoring mentoring = new Mentoring(mt.getTitle(), mt.getDescription(), mt.getDiscipline(), mt.getDuration());
-
-        Mentoring newMentoring = mentoringService.save(mentoring);
-
-        MentoringResponse response = new MentoringResponse(newMentoring.getId(), newMentoring.getTitle(),
-                newMentoring.getDescription(), newMentoring.getDiscipline(), newMentoring.getDuration());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+//    @PostMapping("/post")
+//    public ResponseEntity<MentoringResponse> add(@RequestBody MentoringRequest mt){
+//        Mentoring mentoring = new Mentoring(mt.getTitle(), mt.getDescription(), mt.getDiscipline(), mt.getDuration());
+//
+//        Mentoring newMentoring = mentoringService.save(mentoring);
+//
+//        MentoringResponse response = new MentoringResponse(newMentoring.getId(), newMentoring.getTitle(),
+//                newMentoring.getDescription(), newMentoring.getDiscipline(), newMentoring.getDuration());
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+//    }
 
     @PostMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody MentoringRequest mt){

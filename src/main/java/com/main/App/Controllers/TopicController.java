@@ -3,7 +3,7 @@ package com.main.App.Controllers;
 import com.main.App.Models.Topic;
 import com.main.App.Payload.Request.TopicRequest;
 import com.main.App.Payload.Response.TopicResponse;
-import com.main.App.Service.TopicService;
+import com.main.App.Repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,25 +13,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth/topic")
 @CrossOrigin
 public class TopicController {
-
     @Autowired
-    TopicService topicService;
+    TopicRepository tr;
 
     @GetMapping("/get")
     public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok().body(topicService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(tr.findAll());
     }
 
-    @GetMapping("/{id}")
-    public Topic getTopicById(@PathVariable Long id){
-        return topicService.findById(id);
+    @GetMapping("/get/{id}")
+    public ResponseEntity<TopicResponse> getTopicById(@PathVariable Long id){
+        Topic topic = tr.findById(id).get();
+
+        if(topic != null){
+            TopicResponse response = TopicResponse.builder()
+                    .id(topic.getId())
+                    .name(topic.getName())
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PostMapping("/post")
-    public ResponseEntity<TopicResponse> add(@RequestBody TopicRequest tr){
-        Topic mentoring = new Topic(tr.getName());
+    public ResponseEntity<TopicResponse> add(@RequestBody TopicRequest req){
+        Topic mentoring = new Topic(req.getName());
 
-        Topic newTopic = topicService.save(mentoring);
+        Topic newTopic = tr.save(mentoring);
 
         TopicResponse response = new TopicResponse(newTopic.getId(), newTopic.getName());
 
@@ -39,24 +48,23 @@ public class TopicController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody TopicRequest tr){
-        Topic findTopic = topicService.findById(id);
+    public ResponseEntity<TopicResponse> update(@PathVariable Long id, @RequestBody TopicRequest req){
+        Topic findTopic = tr.findById(id).get();
 
         if (findTopic != null){
-            findTopic.setName(tr.getName());
+            findTopic.setName(req.getName());
 
-            Topic updatedTopic = topicService.save(findTopic);
+            Topic updatedTopic = tr.save(findTopic);
 
             TopicResponse response = new TopicResponse(updatedTopic.getId(), updatedTopic.getName());
 
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id){
-        topicService.delete(id);
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Long id){
+        tr.deleteById(id);
     }
 }

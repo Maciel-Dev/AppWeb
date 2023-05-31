@@ -1,6 +1,6 @@
 package com.main.App.Payload.Response;
 
-import jakarta.validation.constraints.NotBlank;
+import com.main.App.Models.Topic;
 import lombok.*;
 
 import java.util.List;
@@ -16,7 +16,11 @@ public class ProjectResponse {
 
     private String description;
 
+    private Long perfilFK;
+
     private String theme;
 
     private int participants;
+
+    private List<Topic> topics;
 }

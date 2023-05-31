@@ -1,8 +1,12 @@
 package com.main.App.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "topics")
@@ -18,5 +22,17 @@ public class Topic {
         this.name = name;
     }
 
+    @ManyToMany(mappedBy = "topics")
+    @JsonIgnore
+    private List <Perfil> perfils = new ArrayList<>();
+    @ManyToMany
+    @JsonIgnore
+    private List<Publication> publications = new ArrayList<>();
+
     public Topic(){}
+
+    public Topic(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
