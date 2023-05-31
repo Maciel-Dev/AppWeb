@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,8 +37,7 @@ public class EventService {
     public EventResponse adicionarEvento(EventRequest eventRequest) throws NoSuchFieldException {
         var event = Event.builder()
                 .type(String.valueOf(TypePublication.EVENTO))
-                .title(eventRequest.getTitle())
-                .description(eventRequest.getDescription())
+                .dateTime(LocalDateTime.now())
                 .build();
 
         eventRepository.save(event);
