@@ -248,7 +248,6 @@ export default {
               this.setPublication(publication);
               return publication;
             }));
-
     //Verificação de Token
   },
   computed: {
