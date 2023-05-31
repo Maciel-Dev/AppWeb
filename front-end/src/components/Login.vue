@@ -66,6 +66,7 @@ import RegisterComponent from "@/components/RegisterComponent.vue";
 import User from "@/model/user";
 import { login } from "@/service/AuthService";
 import { mapMutations } from "vuex";
+import {setAuthHeader} from "@/service/AxiosService";
 
 
 export default {
@@ -108,7 +109,7 @@ export default {
               if(response.status === 200){
                 // localStorage.setItem("user", response.data.token);
                 this.$cookies.set("user", response.data.token, 3600);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`; // Determina um cabeçalho padrão para toda requisição
+                setAuthHeader(response.data.token) // Determina um cabeçalho padrão para toda requisição
                 // Atribuição do TOKEN da API ao usuário
                 this.user.token = response.data.token;
                 // Construção do Usuário

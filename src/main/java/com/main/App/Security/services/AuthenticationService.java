@@ -99,7 +99,8 @@ public class AuthenticationService {
         boolean validToken = jwtUtils.validateJwtToken(loadRequest.getToken());
         if (validToken) {
             String user = jwtUtils.getUserNameFromJwtToken(loadRequest.getToken());
-            System.out.println(user);
+            Optional<User> userFind = userRepository.findByUsername(user);
+            System.out.println(userFind);
             return LogoutResponse.builder().message("PASSEI").build();
         }
         return LogoutResponse.builder().message("NAO PASSEI").build();

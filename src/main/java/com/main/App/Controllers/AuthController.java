@@ -73,27 +73,4 @@ public class AuthController {
     public ResponseEntity<LogoutResponse> loadUser(@Valid @RequestBody LoadRequest loadRequest){
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.loadUser(loadRequest));
     }
-
-//    @PostMapping("/authenticate")
-//    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) throws IOException {
-//        // Lógica para ler a imagem do local adequado
-//
-//
-//        AuthenticationResponse auth = authenticationService.authenticated(request);
-//
-//        if (auth != null) {
-//            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + auth.getMultipartFile()).body(authenticationService.authenticated(request));
-//        }
-//        return (ResponseEntity<AuthenticationResponse>) ResponseEntity.status(403);
-//    }
-//
-////    @PostMapping("/logout")
-////    public ResponseEntity<LogoutResponse> logout(){
-////        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.logout());
-////    }
-//
-//
-//
-//    // TODO Criar função para fazer verificação do Token informado
-
 }

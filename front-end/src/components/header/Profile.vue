@@ -78,8 +78,10 @@ export default {
       }
     },
     userLogout() {
-      logout();
+      // logout();
+      this.$cookies.remove("user");
       this.$router.push({path:"/login"});
+      // Vue.cookie.set();
     }
   }
 }

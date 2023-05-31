@@ -210,11 +210,13 @@
 
 import {mapGetters, mapMutations} from "vuex";
 // import {getAllProjects} from "@/service/PublicationService";
-import {logout} from "@/service/AuthService";
+import {loadUser, logout} from "@/service/AuthService";
 import Card from "@/components/Card.vue";
 import Profile from "@/components/header/Profile.vue";
 import NewPublication from "@/components/back-drop/newPublication.vue";
 import {getPublications} from "@/service/PublicationService";
+import axios from "axios";
+import {setAuthHeader} from "@/service/AxiosService";
 // import CardPopup from "@/components/CardPopup/CardPopup.vue";
 
 export default {
@@ -248,22 +250,16 @@ export default {
             }));
 
     //Verificação de Token
-    if(this.$cookies.get("user") != null){
-
-    }
   },
   computed: {
     ...mapGetters([
       'getUser',
       'getPublications'
     ]),
+
     now() {
       return this.info?.Object;
     },
-    userGetter() {
-      this.user = this.getUser;
-      return this.user;
-    }
   },
   methods: {
     ...mapMutations(["setUser", "setPublication"]),
@@ -291,7 +287,21 @@ export default {
                 this.setPublication(publication);
                 return publication;
               }))
-    }
+    },
+    verifyUser(codeCondition){
+      if(codeCondition === 1){
+        if (this.$cookies.get("user") != null) {
+            setAuthHeader(this.$cookies.get("user")) // Determina o cabeçalho de requisição dos Requests
+        }
+      }
+    },
+    userGetter() {
+      this.user = this.getUser;
+      return this.user;
+    },
+  },
+  mounted() {
+    this.verifyUser(1);
   }
 };
 </script>

@@ -24,3 +24,7 @@ export async function register(request, image) {
 export async function logout() {
     return await axios.post(URL_API_LOGIN + "logout");
 }
+
+export async function loadUser(token: String){
+    return await axios.post(URL_API_LOGIN + "loadUser", token);
+}
