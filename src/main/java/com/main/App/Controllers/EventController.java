@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth/event")
+@RequestMapping("/api/auth/evento")
 @CrossOrigin
 public class EventController {
 
@@ -29,39 +29,6 @@ public class EventController {
     public Event getEventById(@PathVariable Long id){
         return eventService.findById(id);
     }
-
-//    @PostMapping("/post")
-//    public ResponseEntity<EventResponse> add(@RequestBody EventRequest ev){
-//        Event event = new Event(ev.getTitle(), ev.getDescription(), ev.getDateTime(), ev.getType());
-//
-//        Event newEvent= eventService.save(event);
-//
-//        EventResponse response = new EventResponse(newEvent.getId(), newEvent.getTitle(),
-//                newEvent.getDescription(), newEvent.getDateTime(), newEvent.getType());
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//    }
-//
-//    @PostMapping("/update/{id}")
-//    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody EventRequest ev){
-//        Event findEvent = eventService.findById(id);
-//
-//        if (findEvent != null){
-//            findEvent.setTitle(ev.getTitle());
-//            findEvent.setDescription(ev.getDescription());
-//            findEvent.setDateTime(ev.getDateTime());
-//            findEvent.setType(ev.getType());
-//
-//            Event updatedEvent = eventService.save(findEvent);
-//
-//            EventResponse response = new EventResponse(updatedEvent.getId(), updatedEvent.getTitle(),
-//                    updatedEvent.getDescription(), updatedEvent.getDateTime(), updatedEvent.getType());
-//
-//            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//        }else{
-//            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-//        }
-//    }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){
