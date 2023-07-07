@@ -4,13 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "mentoring")
 @PrimaryKeyJoinColumn(name = "id")
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -31,6 +31,7 @@ import { createPopper } from "@popperjs/core";
 import {mapGetters} from "vuex";
 import {logout} from "@/service/AuthService";
 import axios from "axios";
+import {setAuthHeader} from "@/service/AxiosService";
 
 export default {
   name: "Profile",

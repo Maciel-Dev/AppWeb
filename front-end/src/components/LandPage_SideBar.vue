@@ -1,16 +1,8 @@
 <template>
 
-  <div class="w-screen h-14 grid grid-cols-3 bg-blue-500 flex place-items-center">
-    <div class="mr-full col-">
-      Teste
-    </div>
-    <button class="text-center justify-center bg-amber-500 rounded-lg w-40 h-10 text-white font-bold hover:bg-amber-700">
-      Publicar
-    </button>
-    <div class="text-center bg-amber-500 rounded-lg w-40">
-      Teste
-    </div>
-
+  <div class="bg-emerald-700 p-3 grid grid-cols-3 w-screen place-items-center">
+    <new-publication class="col-start-2"></new-publication>
+    <Profile class="col-start-3 ml-auto mr-6"></Profile>
   </div>
 
   <div class="grid h-screen place-items-center ml-30">
@@ -20,7 +12,7 @@
         <ul>
           <li v-for="item in this.getPublications" :key="item.id">
             <div v-if="item.title != '' ">
-              <Card class="" :publication-item="item"/>
+              <Card :publication-item="item" class=""/>
             </div>
           </li>
         </ul>
@@ -58,6 +50,9 @@ export default {
     }
   },
   created() {
+    if (this.$cookies.get("user") != null) {
+      setAuthHeader(this.$cookies.get("user")) // Determina o cabeçalho de requisição dos Requests
+    }
     // Método para carregar Publicações
     getPublications("evento").then((response) => (this.publications = response.data))
         .then((response) =>
@@ -81,7 +76,6 @@ export default {
       'getUser',
       'getPublications'
     ]),
-
     now() {
       return this.info?.Object;
     },
@@ -94,30 +88,6 @@ export default {
         this.$cookies.remove("user");
         this.setUser("");
         logout();
-        // this.$router.push("/login");
-      }
-    },
-    retrievePublications() {
-      getPublications("evento").then((response) => (this.publications = response.data))
-          .then((response) =>
-              this.publications = this.publications.map((d) => {
-                let publication = {
-                  id: d.id,
-                  title: d.title,
-                  description: d.description,
-                  data: d.data,
-                  datetime: d.datetime,
-                  type: d.type
-                };
-                this.setPublication(publication);
-                return publication;
-              }))
-    },
-    verifyUser(codeCondition) {
-      if (codeCondition === 1) {
-        if (this.$cookies.get("user") != null) {
-          setAuthHeader(this.$cookies.get("user")) // Determina o cabeçalho de requisição dos Requests
-        }
       }
     },
     userGetter() {
@@ -126,7 +96,6 @@ export default {
     },
   },
   mounted() {
-    this.verifyUser(1);
     if (!this.$cookies.get("user")) {
       this.$router.push("/login");
     }

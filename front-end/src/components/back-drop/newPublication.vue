@@ -12,10 +12,13 @@
         <div
             class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
           <!--header-->
-          <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+          <div class="grid flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
             <h3 class="text-3xl font-semibold">
-              Escreva sua nova Publicação, %Adicionar o nome do usuário%
+              Escreva sua nova Publicação, Trocar para VUEX
             </h3>
+            <div v-if="pSend" class="bg-red-500 rounded text-white text-center font-bold">
+              Aconteceu um erro X (Variável do erro)
+            </div>
           </div>
           <!--body-->
           <div class="relative p-6 flex-auto">
@@ -83,6 +86,7 @@ export default {
     return {
       showModal: false,
       publication: new Publication("", "", "", "", ""),
+      pSend: false,
     }
   },
   methods: {
@@ -100,8 +104,11 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               console.log("TESTE");
+              this.toggleModal();
             }
-          })
+          });
+
+
     }
   }
 }

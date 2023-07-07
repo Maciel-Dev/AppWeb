@@ -2,6 +2,7 @@ package com.main.App.Models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -12,14 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@SuperBuilder
 public class Project extends Publication {
     private String theme;
     private int participants;
 
-    @Builder
-    public Project(String title, String description, Perfil perfil, String theme, int participants, List<Topic> topics) {
-        super(title, description, perfil, topics);
-        this.theme = theme;
-        this.participants = participants;
-    }
+
 }

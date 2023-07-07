@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/auth/projects")
+@RequestMapping("/api/auth/projeto")
 @CrossOrigin
 public class ProjectController {
 
