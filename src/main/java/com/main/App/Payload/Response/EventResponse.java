@@ -16,4 +16,5 @@ public class EventResponse {
     private String description;
     private LocalDateTime dateTime;
     private String type;
+    private Long like;
 }

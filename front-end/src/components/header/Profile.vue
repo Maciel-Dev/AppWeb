@@ -42,6 +42,11 @@ export default {
       img_file: ''
     }
   },
+  created() {
+    if (this.$cookies.get("user") != null) {
+      setAuthHeader(this.$cookies.get("user")) // Determina o cabeçalho de requisição dos Requests
+    }
+  },
   computed:{
     ...mapGetters(["getUser", "getImg"]),
     retUser(){

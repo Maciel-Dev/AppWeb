@@ -13,12 +13,13 @@
             publicationItem.title
           }}</h5>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ publicationItem.description }}</p>
+        <p class="text-white">Likes: {{ publicationItem.like }}</p>
       </div>
     </a>
     <div
         class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
       <div class="columns-2 mt-3">
-        <heart></heart>
+        <heart :publication-item="publicationItem"></heart>
         <div class="flex-col">
           <donate-button class="mb-2"></donate-button>
         </div>

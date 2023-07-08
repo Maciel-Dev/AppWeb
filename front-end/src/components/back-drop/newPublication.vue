@@ -22,7 +22,7 @@
           </div>
           <!--body-->
           <div class="relative p-6 flex-auto">
-            <form @submit.prevent="sendPublication">
+            <form @submit.prevent="sendPublication" ref="form">
               <div class="grid grid-cols-2 gap-4">
                 <div>
 <!--                  <form class="mt-6" @submit.prevent="sendPublication">-->
@@ -78,6 +78,7 @@
 import FileImageButton from "@/components/buttons/fileImageButton.vue";
 import {postPublication} from "@/service/PublicationService";
 import Publication from "@/model/Publication";
+import {mapMutations} from "vuex";
 
 export default {
   name: "newPublication",
@@ -90,6 +91,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(["setPublication"]),
     toggleModal: function () {
       this.showModal = !this.showModal;
     },
@@ -103,7 +105,7 @@ export default {
       postPublication(this.publication)
           .then((response) => {
             if (response.status === 200) {
-              console.log("TESTE");
+              this.setPublication(this.publication)
               this.toggleModal();
             }
           });

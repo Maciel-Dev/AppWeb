@@ -2,7 +2,9 @@ package com.main.App.Controllers;
 
 import com.main.App.Models.Event;
 import com.main.App.Payload.Request.EventRequest;
+import com.main.App.Payload.Request.LikeRequest;
 import com.main.App.Payload.Response.EventResponse;
+import com.main.App.Payload.Response.LikeResponse;
 import com.main.App.Service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,5 +37,10 @@ public class EventController {
     @PostMapping("/post")
     public ResponseEntity<EventResponse> add(@RequestBody EventRequest ev) throws NoSuchFieldException {
         return ResponseEntity.ok(eventService.adicionarEvento(ev));
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<LikeResponse> like(@RequestBody LikeRequest lk){
+        return ResponseEntity.ok(eventService.like(lk));
     }
 }
