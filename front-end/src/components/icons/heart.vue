@@ -1,17 +1,17 @@
 <template>
-  <a class="flex-col" href="#">
-    <div id="animateButton" @click="animate">
-      <font-awesome-icon :icon="['fas', 'heart']" class="" size="2xl" style="color: #ffffff;"/>
-    </div>
-  </a>
+  <button class="flex-col bg-black text-white" @click="likeClick(publicationItem.id)">
+      TESTE
+  </button>
 </template>
 
 <script>
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import DonateButton from "@/components/buttons/donateButton.vue";
+import {likePublication} from "@/service/PublicationService";
 export default {
   name: "heart",
   components: {FontAwesomeIcon},
+  props: ['publicationItem'],
   methods: {
     animate() {
       this.$el.querySelector("#animateButton").classList.add("animate-jump")
@@ -22,6 +22,9 @@ export default {
             document.querySelector("#animateButton").classList.remove("animate-once")
           }, 400
       )
+    },
+    likeClick(id){
+      likePublication(id, "evento");
     }
   }
 }

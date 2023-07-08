@@ -21,3 +21,8 @@ export function postPublication(publication){
 export function getPublications(publication){
     return axios.get(URL_API_PUBLICATIONS + publication + "/get");
 }
+
+export async function likePublication(id, publication){
+    return axios
+        .post(URL_API_PUBLICATIONS + "evento/like", id)
+}

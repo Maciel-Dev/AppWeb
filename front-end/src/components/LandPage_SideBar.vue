@@ -63,7 +63,8 @@ export default {
                 description: d.description,
                 data: d.data,
                 datetime: d.datetime,
-                type: d.type
+                type: d.type,
+                like: d.likes
               };
               this.setPublication(publication);
               return publication;
