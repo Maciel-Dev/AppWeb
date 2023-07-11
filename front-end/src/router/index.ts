@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginForm from "@/views/LoginForm.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import TesteView from "@/views/TesteView.vue";
+import PerfilView from "@/views/PerfilView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,9 +27,9 @@ const router = createRouter({
       component: RegisterView
     },
     {
-      path: '/teste',
-      name: 'teste',
-      component: TesteView
+      path: '/perfil/:id',
+      name: 'perfil',
+      component: PerfilView
     },
     {
       path: "/:catchAll(.*)", redirect: '/'

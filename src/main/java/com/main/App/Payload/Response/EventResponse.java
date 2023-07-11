@@ -17,4 +17,5 @@ public class EventResponse {
     private LocalDateTime dateTime;
     private String type;
     private Long like;
+    private String author;
 }

@@ -90,6 +90,7 @@ public class AuthenticationService {
         } else {
             return AuthenticationResponse.builder().
                     userDetails(userDetails)
+//                    .c_perfil()
                     .token(jwt)
                     .build();
         }

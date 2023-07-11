@@ -21,6 +21,9 @@ export default createStore({
         getUser (state){
             return state.user;
         },
+        getEmailUser(state){
+          return state.user.email;
+        },
         getImg (state){
             return state.user.img_blob;
         },

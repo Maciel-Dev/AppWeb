@@ -1,7 +1,6 @@
 package com.main.App.Service;
 
 import com.main.App.Models.Event;
-import com.main.App.Models.Publication;
 import com.main.App.Models.TypePublication;
 import com.main.App.Payload.Request.EventRequest;
 import com.main.App.Payload.Request.LikeRequest;
@@ -47,7 +46,7 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
-    public EventResponse adicionarEvento(EventRequest eventRequest) throws NoSuchFieldException {
+    public EventResponse adicionarEvento(EventRequest eventRequest) {
         var event = Event.builder()
                 .likes(0L)
                 .data(new Date())

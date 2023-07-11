@@ -18,10 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 public class Event extends Publication {
-
     private LocalDateTime dateTime;
     private String type;
-
 
     public Event() {
 

@@ -78,7 +78,7 @@
 import FileImageButton from "@/components/buttons/fileImageButton.vue";
 import {postPublication} from "@/service/PublicationService";
 import Publication from "@/model/Publication";
-import {mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "newPublication",
@@ -92,6 +92,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setPublication"]),
+    ...mapGetters(["getUser", "getEmailUser"]),
     toggleModal: function () {
       this.showModal = !this.showModal;
     },
@@ -102,6 +103,7 @@ export default {
       PublicationForm.append("title", this.publication.title);
       PublicationForm.append("data", new Date().getDate().toString());
       PublicationForm.append("type", "EVENTO");
+      PublicationForm.append("author", "123")
       postPublication(this.publication)
           .then((response) => {
             if (response.status === 200) {

@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 public class LikeRequest {
 
     @NotBlank
-    private Long id;
+    private String id;
 
 }

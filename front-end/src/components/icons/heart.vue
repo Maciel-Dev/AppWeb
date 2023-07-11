@@ -1,6 +1,6 @@
 <template>
-  <button class="flex-col bg-black text-white" @click="likeClick(publicationItem.id)">
-      TESTE
+  <button class="flex-col rounded text-white" @click="likeClick(publicationItem.id)">
+    <font-awesome-icon :icon="['fas', 'heart']" @click="animate" class="heart" size="2xl" id="animateButton" />
   </button>
 </template>
 
@@ -8,6 +8,8 @@
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import DonateButton from "@/components/buttons/donateButton.vue";
 import {likePublication} from "@/service/PublicationService";
+
+
 export default {
   name: "heart",
   components: {FontAwesomeIcon},

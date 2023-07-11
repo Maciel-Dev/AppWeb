@@ -14,6 +14,8 @@
           }}</h5>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ publicationItem.description }}</p>
         <p class="text-white">Likes: {{ publicationItem.like }}</p>
+        <p class="text-white">Author: {{  }}</p>
+
       </div>
     </a>
     <div
@@ -66,7 +68,10 @@ import Heart from "@/components/icons/heart.vue";
 export default {
   name: "Card",
   components: {Heart, DonateButton, FontAwesomeIcon},
-  props: ["publicationItem"]
+  props: ["publicationItem"],
+  computed:{
+
+  },
 }
 </script>
 

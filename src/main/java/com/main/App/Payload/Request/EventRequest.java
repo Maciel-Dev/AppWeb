@@ -20,4 +20,6 @@ public class EventRequest {
     private LocalDateTime dateTime;
     @NotBlank
     private String type;
+    @NotBlank
+    private String author;
 }

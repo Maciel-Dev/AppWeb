@@ -17,7 +17,6 @@ public class AuthenticationResponse {
     private String firstName;
     private String lastName;
     private String id_user;
-//    private String token;
-//    private String multipartFile;
-//    private byte[] image_blob;
+    private boolean c_perfil;
+
 }
