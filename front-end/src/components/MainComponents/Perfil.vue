@@ -7,9 +7,9 @@
 
   <div class="grid-cols-3 grid-rows-3 grid h-screen">
     <div class="rounded-full bg-black w-24 h-24">
-      <div class="text-white">
+      <div class="">
         <p>
-          Teste
+          {{ this.profile_id }}
         </p>
       </div>
     </div>
@@ -19,10 +19,31 @@
 <script>
 import Profile from "@/components/header/Profile.vue";
 import NewPublication from "@/components/back-drop/newPublication.vue";
+import {getPerfil} from "@/service/PerfilService";
+import {setAuthHeader} from "@/service/AxiosService";
 
 export default {
   name: "Perfil",
-  components: {NewPublication, Profile}
+  components: {NewPublication, Profile},
+  data() {
+    return {
+      profile_id: "",
+      biography: "",
+      birth_date: "",
+      gender: "",
+    }
+  },
+  created() {
+    if (this.$cookies.get("user") != null) {
+      setAuthHeader(this.$cookies.get("user")) // Determina o cabeçalho de requisição dos Requests
+    }
+    getPerfil(this.$cookies.get("user_id")).then((response) => {
+      this.profile_id = response.data.id;
+      this.biography = response.data.biography;
+      this.birth_date = response.data.birth_date;
+      this.gender = response.data.gender;
+    })
+  }
 }
 </script>
 

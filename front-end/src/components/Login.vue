@@ -109,6 +109,7 @@ export default {
               if(response.status === 200){
                 // localStorage.setItem("user", response.data.token);
                 this.$cookies.set("user", response.data.token, 3600);
+                this.$cookies.set("user_id", response.data.id_user);
                 setAuthHeader(response.data.token) // Determina um cabeçalho padrão para toda requisição
                 // Atribuição do TOKEN da API ao usuário
                 this.user.token = response.data.token;

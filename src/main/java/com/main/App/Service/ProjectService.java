@@ -27,41 +27,12 @@ public class ProjectService {
     private TopicRepository tr;
 
     public ProjectResponse create(ProjectRequest req){
-        //busca perfil no banco de dados
-        Perfil perfil = pfr.findById(req.getPerfilFk()).get();
 
-        //atribuição dos tópicos na publicação
-        List<Topic> topics = new ArrayList<>();
-        for (Long id : req.getTopics()){
-            Topic topic = tr.findById(id).get();
-            if(topic != null){
-                topics.add(topic);
-            }
-        }
+        Project project = Project.builder().title(req.getTitle()).description(req.getDescription()).theme(req.getTheme()).participants(req.getParticipants()).build();
 
-        //cria um projeto
-        Project project = Project.builder()
-                .title(req.getTitle())
-                .description(req.getDescription())
-                .perfil(perfil)
-                .theme(req.getTheme())
-                .participants(req.getParticipants())
-                .topics(topics)
-                .build();
-        //salva o projeto no banco de dados
-        project = pr.save(project);
+        pr.save(project);
 
-        //contrução da resposta
-        ProjectResponse response = ProjectResponse.builder()
-                .id(project.getId())
-                .title(project.getTitle())
-                .description(project.getDescription())
-                .perfilFK(perfil.getId())
-                .theme(project.getTheme())
-                .participants(project.getParticipants())
-                .topics(project.getTopics())
-                .build();
-        return response;
+        return ProjectResponse.builder().description(project.getDescription()).title(project.getTitle()).type("PROJETO").participants(project.getParticipants()).build();
     }
 
     public ProjectResponse update(Long id, ProjectRequest req){

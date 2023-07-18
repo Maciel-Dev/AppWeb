@@ -54,7 +54,7 @@ export default {
       setAuthHeader(this.$cookies.get("user")) // Determina o cabeçalho de requisição dos Requests
     }
     // Método para carregar Publicações
-    getPublications("evento").then((response) => (this.publications = response.data))
+    getPublications().then((response) => (this.publications = response.data.publication))
         .then((response) =>
             this.publications = this.publications.map((d) => {
               let publication = {

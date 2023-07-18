@@ -13,14 +13,10 @@ import java.util.List;
 public class ProjectResponse {
     private Long id;
     private String title;
-
     private String description;
-
     private Long perfilFK;
-
     private String theme;
-
     private int participants;
-
+    private String type;
     private List<Topic> topics;
 }

@@ -6,9 +6,9 @@
           <img v-bind:src="img_file" alt="Imagem" class="rounded-full" width="70" height="70"/>
         </button>
         <div v-bind:class="{'hidden': !dropdownPopoverShow, 'block': dropdownPopoverShow}" class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1" style="min-width:12rem" ref="popoverDropdownRef">
-          <a href="#pablo" class="text-sm py-2 px-4 rounded font-bold block w-full whitespace-nowrap bg-transparent hover:bg-cyan-900 hover:text-neutral-100 text-slate-700">
+          <button @click="accessProfile" class="text-sm py-2 px-4 rounded font-bold block w-full whitespace-nowrap bg-transparent hover:bg-cyan-900 hover:text-neutral-100 text-slate-700">
             Meu Perfil
-          </a>
+          </button>
           <a href="#pablo" class="hover:bg-cyan-900 rounded hover:text-neutral-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-slate-700">
             Another action
           </a>
@@ -39,7 +39,8 @@ export default {
     return {
       dropdownPopoverShow: false,
       username: "Anonimo",
-      img_file: ''
+      img_file: '',
+      user_id: this.$cookies.get("user_id")
     }
   },
   created() {
@@ -63,7 +64,7 @@ export default {
   },
   methods: {
     carregarImagem(){
-      axios.get("http://localhost:8082/api/auth/fileUpload/image/" + this.getUser.id, {
+      axios.get("http://localhost:8082/api/auth/fileUpload/image/" + this.$cookies.get("user_id"), {
         responseType: 'arraybuffer'
       })
           .then(response => {
@@ -88,6 +89,9 @@ export default {
       this.$cookies.remove("user");
       this.$router.push({path:"/login"});
       // Vue.cookie.set();
+    },
+    accessProfile(){
+      this.$router.push({name:"perfil", params:{id: this.user_id}});
     }
   }
 }
