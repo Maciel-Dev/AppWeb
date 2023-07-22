@@ -9,14 +9,17 @@ import java.util.List;
 @Entity
 @Table(name = "projects")
 @PrimaryKeyJoinColumn(name = "id")
+@SuperBuilder
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-@SuperBuilder
 public class Project extends Publication {
     private String theme;
     private int participants;
+    private String type;
 
+    public Project() {
+
+    }
 
 }

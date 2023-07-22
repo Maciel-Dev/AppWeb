@@ -49,6 +49,8 @@ public class User {
 
     private String img_profile;
 
+    private boolean firstLogin;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

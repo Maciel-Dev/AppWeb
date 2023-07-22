@@ -38,7 +38,7 @@
             <a href="#" class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
           </div>
 
-          <button type="submit" @click="handleLogin" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
+          <button type="submit" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
               px-4 py-3 mt-6">Log In</button>
         </form>
 
@@ -74,7 +74,7 @@ export default {
   components: {RegisterComponent},
   data() {
     return {
-      user: new User("", "", "", "", "", "", ""),
+      user: new User("", "", "", "", "", "", "",),
       loading: false,
       message: '',
       error: {
@@ -115,10 +115,14 @@ export default {
                 this.user.token = response.data.token;
                 // Construção do Usuário
                 this.user.id = response.data.id_user;
-
                 this.setUser(this.user);
-
-                this.$router.push({path: "/", props: true});
+                this.user.first_login = response.data.first_login;
+                if(this.user.first_login === true){
+                  this.$router.push({name: "edit_perfil", params:{id: this.$cookies.get("user_id")}})
+                }
+                else{
+                  this.$router.push({path: "/", props: true});
+                }
               }
               else{
                 this.error.condition = true;

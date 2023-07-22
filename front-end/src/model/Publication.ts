@@ -4,14 +4,16 @@ export default class Publication{
     description = "";
     title = "";
     type = null;
-    constructor(id, data, description, title, type) {
+    author = "";
+    id_perfil = null;
+    constructor(id, data, description, title, type, author, id_perfil) {
 
         this.id = id;
         this.data = data;
         this.description = description;
         this.title = title;
         this.type = type;
-
+        this.author = author;
+        this.id_perfil = id_perfil;
     }
-
 }

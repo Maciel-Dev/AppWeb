@@ -7,13 +7,14 @@ import VueCookies from "vue-cookies";
 /* import font awesome icon component */
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUserSecret, faDoorOpen, faHeart } from '@fortawesome/free-solid-svg-icons'
+import {faUserSecret, faDoorOpen, faHeart, faTrash} from '@fortawesome/free-solid-svg-icons'
 
 const app = createApp(App);
 
 library.add(faUserSecret);
 library.add(faDoorOpen);
 library.add(faHeart);
+library.add(faTrash);
 
 app.use(router);
 app.use(store);

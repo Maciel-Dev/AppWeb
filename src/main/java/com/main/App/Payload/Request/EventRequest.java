@@ -22,4 +22,6 @@ public class EventRequest {
     private String type;
     @NotBlank
     private String author;
+    @NotBlank
+    private String id_perfil;
 }

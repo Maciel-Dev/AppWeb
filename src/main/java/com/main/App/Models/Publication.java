@@ -44,7 +44,7 @@ public class Publication {
         this.title = title;
         this.description = description;
         this.data = Calendar.getInstance().getTime();
-        this.perfil = perfil;
+//        this.perfil = perfil;
         this.topics = topics;
     }
     public Publication() {

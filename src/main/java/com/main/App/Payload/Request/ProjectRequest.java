@@ -1,5 +1,6 @@
 package com.main.App.Payload.Request;
 
+import com.main.App.Models.TypePublication;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 

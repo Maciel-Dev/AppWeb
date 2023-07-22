@@ -5,6 +5,8 @@
     <Profile class="col-start-3 ml-auto mr-6"></Profile>
   </div>
 
+  <pub-confirmation v-if="pubSend"></pub-confirmation>
+
   <div class="grid h-screen place-items-center ml-30">
     <div class="mt-5">
       <!-- Put Here -->
@@ -34,10 +36,11 @@ import Profile from "@/components/header/Profile.vue";
 import NewPublication from "@/components/back-drop/newPublication.vue";
 import {getPublications} from "@/service/PublicationService";
 import {setAuthHeader} from "@/service/AxiosService";
+import PubConfirmation from "@/components/CardPopup/pubConfirmation.vue";
 // import CardPopup from "@/components/CardPopup/CardPopup.vue";
 
 export default {
-  components: {NewPublication, Profile, Card},
+  components: {PubConfirmation, NewPublication, Profile, Card},
   setup() {
     // const userStore = useUserStore;
     // return { userStore };
@@ -46,7 +49,8 @@ export default {
     return {
       user: null,
       info: null,
-      publications: {}
+      publications: {},
+      pubSend: this.getPublicationSend
     }
   },
   created() {
@@ -64,7 +68,8 @@ export default {
                 data: d.data,
                 datetime: d.datetime,
                 type: d.type,
-                like: d.likes
+                like: d.likes,
+                fk_perfil: d.perfil.id
               };
               this.setPublication(publication);
               return publication;
@@ -75,14 +80,22 @@ export default {
   computed: {
     ...mapGetters([
       'getUser',
-      'getPublications'
+      'getPublications',
+        'getPubSend'
     ]),
     now() {
       return this.info?.Object;
     },
+    getPublicationSend(){
+      alert(this.pubSend);
+      return this.getPubSend;
+    },
+    removeSendPub(){
+
+    }
   },
   methods: {
-    ...mapMutations(["setUser", "setPublication"]),
+    ...mapMutations(["setUser", "setPublication", "setPubSend"]),
     logout() {
       // Alterar verificação para a Store com o armazenamento do cookie
       if (this.$cookies.get("user")) {
@@ -99,6 +112,9 @@ export default {
   mounted() {
     if (!this.$cookies.get("user")) {
       this.$router.push("/login");
+    }
+    if(this.pubSend){
+      this.setPubSend(false);
     }
   }
 };

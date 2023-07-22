@@ -57,6 +57,7 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .img_profile(request.getFile_image().getOriginalFilename())
                 .roles(roles)
+                .firstLogin(true)
                 .build();
 
         userRepository.save(user); // Salvando no Banco
@@ -86,6 +87,7 @@ public class AuthenticationService {
                     .firstName(user.get().getFirstName())
                     .lastName(user.get().getLastName())
                     .id_user(user.get().getId().toString())
+                    .first_login(user.get().isFirstLogin())
                     .build();
         } else {
             return AuthenticationResponse.builder().

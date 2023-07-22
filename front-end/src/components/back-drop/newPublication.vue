@@ -86,13 +86,14 @@ export default {
   data() {
     return {
       showModal: false,
-      publication: new Publication("", "", "", "", ""),
+      publication: new Publication("", "", "", "", "", "", this.$cookies.get("user_id")),
       pSend: false,
+      user_id: this.$cookies.get("user_id")
     }
   },
   methods: {
-    ...mapMutations(["setPublication"]),
-    ...mapGetters(["getUser", "getEmailUser"]),
+    ...mapMutations(["setPublication","setPubSend"]),
+    ...mapGetters(["getUser", "getEmailUser", "getPubSend"]),
     toggleModal: function () {
       this.showModal = !this.showModal;
     },
@@ -103,17 +104,17 @@ export default {
       PublicationForm.append("title", this.publication.title);
       PublicationForm.append("data", new Date().getDate().toString());
       PublicationForm.append("type", "EVENTO");
-      PublicationForm.append("author", "123")
+      PublicationForm.append("author", "123");
+      PublicationForm.append("id_perfil", this.$cookies.get("user_id"));
       postPublication(this.publication)
           .then((response) => {
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
               this.setPublication(this.publication)
               this.toggleModal();
+              this.setPubSend(true);
             }
           });
-
-
-    }
+    },
   }
 }
 </script>

@@ -15,7 +15,8 @@ export default createStore({
             id: "",
             title: "",
             description: ""
-        }]
+        }],
+        send: false
     },
     getters: {
         getUser (state){
@@ -32,6 +33,9 @@ export default createStore({
         },
         getPublicationsLength(state){
             return state.publication.length;
+        },
+        getPubSend(state){
+            return state.send
         }
 
     },
@@ -46,6 +50,9 @@ export default createStore({
         },
         setPublication(state, publicationItem){
             state.publication.unshift(publicationItem);
+        },
+        setPubSend(state, bool){
+            state.send = bool;
         }
     }
 })

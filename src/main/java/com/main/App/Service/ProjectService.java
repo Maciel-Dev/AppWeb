@@ -1,8 +1,6 @@
 package com.main.App.Service;
 
-import com.main.App.Models.Perfil;
-import com.main.App.Models.Project;
-import com.main.App.Models.Topic;
+import com.main.App.Models.*;
 import com.main.App.Payload.Request.ProjectRequest;
 import com.main.App.Payload.Response.ProjectResponse;
 import com.main.App.Repositories.PerfilRepository;
@@ -12,7 +10,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,66 +28,18 @@ public class ProjectService {
 
     public ProjectResponse create(ProjectRequest req){
 
-        Project project = Project.builder().title(req.getTitle()).description(req.getDescription()).theme(req.getTheme()).participants(req.getParticipants()).build();
+        var project = Project.builder()
+                .title(req.getTitle())
+                .type("PROJETO")
+                .description(req.getDescription())
+                .theme(req.getTheme())
+                .participants(req.getParticipants())
+                .build();
 
         pr.save(project);
 
         return ProjectResponse.builder().description(project.getDescription()).title(project.getTitle()).type("PROJETO").participants(project.getParticipants()).build();
     }
 
-    public ProjectResponse update(Long id, ProjectRequest req){
-        Project project = pr.findById(id).get();
 
-        if(project != null){
-            //atribuição dos tópicos na publicação
-            List<Topic> topics = new ArrayList<>();
-            for (Long topicId : req.getTopics()){
-                Topic topic = tr.findById(topicId).get();
-                if(topic != null){
-                    topics.add(topic);
-                }
-            }
-            //atualização dos campos
-            project.setTitle(req.getTitle());
-            project.setDescription(req.getDescription());
-            project.setTheme(req.getTheme());
-            project.setParticipants(req.getParticipants());
-            project.setTopics(topics);
-            //salva as atualizações
-            project = pr.save(project);
-        }
-
-        //contrução da resposta
-        ProjectResponse response = ProjectResponse.builder()
-                .id(project.getId())
-                .title(project.getTitle())
-                .description(project.getDescription())
-                .perfilFK(project.getPerfil().getId())
-                .theme(project.getTheme())
-                .participants(project.getParticipants())
-                .topics(project.getTopics())
-                .build();
-        return response;
-    }
-
-    public List<ProjectResponse> findAll(){
-        List<Project> projects = pr.findAll();
-        List<ProjectResponse> projectListResponse = new ArrayList<>();
-
-        for (Project project : projects){
-            //contrução da resposta
-            ProjectResponse response = ProjectResponse.builder()
-                    .id(project.getId())
-                    .title(project.getTitle())
-                    .description(project.getDescription())
-                    .perfilFK(project.getPerfil().getId())
-                    .theme(project.getTheme())
-                    .participants(project.getParticipants())
-                    .topics(project.getTopics())
-                    .build();
-            //adição da resposta na lista
-            projectListResponse.add(response);
-        }
-        return projectListResponse;
-    }
 }

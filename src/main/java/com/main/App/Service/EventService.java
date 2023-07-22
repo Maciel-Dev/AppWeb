@@ -7,6 +7,7 @@ import com.main.App.Payload.Request.LikeRequest;
 import com.main.App.Payload.Response.EventResponse;
 import com.main.App.Payload.Response.LikeResponse;
 import com.main.App.Repositories.EventRepository;
+import com.main.App.Repositories.PerfilRepository;
 import com.main.App.Repositories.PublicationRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ import java.util.List;
 public class EventService {
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private PerfilRepository perfilRepository;
+
     @Autowired
     private PublicationRepository publicationRepository;
 
@@ -47,9 +52,11 @@ public class EventService {
     }
 
     public EventResponse adicionarEvento(EventRequest eventRequest) {
+
         var event = Event.builder()
                 .likes(0L)
                 .data(new Date())
+                .perfil(perfilRepository.findPerfilByUser(Long.parseLong(eventRequest.getId_perfil())))
                 .title(eventRequest.getTitle())
                 .description(eventRequest.getDescription())
                 .type(String.valueOf(TypePublication.EVENTO))
@@ -63,6 +70,7 @@ public class EventService {
                 .title(eventRequest.getTitle())
                 .description(eventRequest.getDescription())
                 .dateTime(eventRequest.getDateTime())
+                .author(perfilRepository.findPerfilByUser(Long.parseLong(eventRequest.getId_perfil())).getUser().getUsername())
                 .build();
     }
 }
