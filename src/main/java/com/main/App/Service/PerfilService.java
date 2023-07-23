@@ -32,77 +32,53 @@ public class PerfilService {
         List topicsProjections = tr.findTopicsByPerfilId(perfil.getId());
 
         //construção da resposta
-        PerfilResponse response = PerfilResponse.builder()
+        return PerfilResponse.builder()
                 .id(perfil.getId())
                 .biography(perfil.getBiography())
-                .topics(topicsProjections)
+//                .topics(topicsProjections)
                 .fkUser(perfil.getUser().getId())
                 .creationDate(perfil.getCreationDate()).build();
-        return response;
     }
 
     public PerfilResponse create(PerfilRequest request){
         //busca pelo usuário
         User user = ur.findById(request.getFkUser()).get();
 
-        //construção do novo perfil
-        Perfil newPerfil = Perfil.builder()
-                .biography(request.getBiography())
-                .user(user).build();
+        ur.setFirstLogin(user.getId());
 
-        //atribuição dos tópicos no perfil
-        List<Topic> topics = new ArrayList<>();
-        for(Long topicId : request.getTopics()) {
-            Topic topic = tr.findById(topicId).get();
-            if (topic != null) {
-                topics.add(topic);
-            }
-        }
-        newPerfil.setTopics(topics);
+        Perfil perfil = Perfil.builder().id(request.getFkUser()).user(user).biography(request.getBiography()).build();
+        pr.save(perfil);
 
-        //salvando o perfil no banco
-        Perfil perfilCreated = pr.save(newPerfil);
-        //recuperando os tópicos do perfil
-        List topicsProjections = tr.findTopicsByPerfilId(perfilCreated.getId());
-
-        //construção da resposta
-        PerfilResponse response = PerfilResponse.builder()
-                .id(perfilCreated.getId())
-                .biography(perfilCreated.getBiography())
-                .topics(topicsProjections)
-                .fkUser(perfilCreated.getUser().getId())
-                .creationDate(perfilCreated.getCreationDate()).build();
-
-        return response;
+        return PerfilResponse.builder().id(perfil.getId()).biography(perfil.getBiography()).build();
     }
 
-    public PerfilResponse updatePerfil(Long id, PerfilRequest request){
-        Perfil perfil = pr.findById(id).get();
-
-        if(perfil != null){
-            perfil.setBiography(request.getBiography());
-            //atribuição dos tópicos no perfil
-            List<Topic> topics = new ArrayList<>();
-            for(Long topicId : request.getTopics()) {
-                Topic topic = tr.findById(topicId).get();
-                if (topic != null) {
-                    topics.add(topic);
-                }
-            }
-            perfil.setTopics(topics);
-
-            perfil = pr.save(perfil);
-
-            //construção da resposta
-            PerfilResponse response = PerfilResponse.builder()
-                    .id(perfil.getId())
-                    .biography(perfil.getBiography())
-                    .topics(perfil.getTopics())
-                    .fkUser(perfil.getUser().getId())
-                    .creationDate(perfil.getCreationDate()).build();
-
-            return response;
-        }
-        return null;
-    }
+//    public PerfilResponse updatePerfil(Long id, PerfilRequest request){
+//        Perfil perfil = pr.findById(id).get();
+//
+//        if(perfil != null){
+//            perfil.setBiography(request.getBiography());
+//            //atribuição dos tópicos no perfil
+//            List<Topic> topics = new ArrayList<>();
+//            for(Long topicId : request.getTopics()) {
+//                Topic topic = tr.findById(topicId).get();
+//                if (topic != null) {
+//                    topics.add(topic);
+//                }
+//            }
+//            perfil.setTopics(topics);
+//
+//            perfil = pr.save(perfil);
+//
+//            //construção da resposta
+//            PerfilResponse response = PerfilResponse.builder()
+//                    .id(perfil.getId())
+//                    .biography(perfil.getBiography())
+//                    .topics(perfil.getTopics())
+//                    .fkUser(perfil.getUser().getId())
+//                    .creationDate(perfil.getCreationDate()).build();
+//
+//            return response;
+//        }
+//        return null;
+//    }
 }

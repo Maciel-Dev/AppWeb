@@ -26,13 +26,13 @@ public class PerfilController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ps.create(req));
     }
 
-    @PostMapping("/update/{id}")
-    public ResponseEntity<PerfilResponse> update(@PathVariable Long id, @RequestBody PerfilRequest req){
-        PerfilResponse res = ps.updatePerfil(id, req);
-
-        if (res != null){
-            return ResponseEntity.status(HttpStatus.OK).body(res);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-    }
+//    @PostMapping("/update/{id}")
+//    public ResponseEntity<PerfilResponse> update(@PathVariable Long id, @RequestBody PerfilRequest req){
+//        PerfilResponse res = ps.updatePerfil(id, req);
+//
+//        if (res != null){
+//            return ResponseEntity.status(HttpStatus.OK).body(res);
+//        }
+//        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+//    }
 }

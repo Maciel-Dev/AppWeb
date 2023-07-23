@@ -14,7 +14,7 @@ import java.util.List;
 public class PerfilRequest {
     @NotBlank
     private String biography;
-    private List<Long> topics;
+//    private List<Long> topics;
     @NotBlank
     private Long fkUser;
 
