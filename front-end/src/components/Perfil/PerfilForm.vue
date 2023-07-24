@@ -6,12 +6,12 @@
     <div class="bg-gray-600 rounded-full w-72 h-72 flex justify-center items-center">
       <img alt="Imagem" class="rounded-full object-scale-down w-48" v-bind:src="img_file"/>
     </div>
-    <form @submit.prevent="">
+    <form @submit.prevent="createProfile">
       <div class="text-center">
         <p>Descreva uma biografia</p>
         <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Digite "
-                  type="text" v-model="bio"></textarea>
+                  type="text" v-model="profile.bio"></textarea>
         <div class="mt-10">
           <label class="block mb-2 text-sm font-medium text-gray-900" for="countries">Select an option</label>
           <select id="countries"
@@ -33,14 +33,18 @@
 <script>
 import axios from "axios";
 import {setAuthHeader} from "@/service/AxiosService";
+import {createPerfil} from "@/service/PerfilService";
 
 export default {
   name: "PerfilForm",
   data() {
     return {
       img_file: '',
-      bio: '',
-      gen: ''
+      profile: {
+        bio: '',
+        gen: '',
+        id: this.$cookies.get("user_id")
+      }
     }
   },
   created() {
@@ -62,7 +66,11 @@ export default {
           });
     },
     createProfile(){
-
+      createPerfil(this.profile).then((response) => {
+        if(response.status === 200 || response.status === 201){
+          this.$router.push({path: "/", props: true});
+        }
+      })
     }
   },
   mounted() {

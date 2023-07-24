@@ -17,3 +17,10 @@ export function getPerfil(id){
     let date = new Date().toString();
     return axios.get(URL_API_PERFIL + "/get/" + id);
 }
+
+export function createPerfil(perfil){
+    return axios.post(URL_API_PERFIL + "/post", {
+        biography: perfil.bio,
+        fkUser: perfil.id
+    })
+}
