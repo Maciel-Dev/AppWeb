@@ -1,6 +1,6 @@
 <template>
 
-  <div class="bg-emerald-700 p-3 grid grid-cols-3 w-screen place-items-center">
+  <div class="bg-blue-950 p-3 grid grid-cols-3 w-screen place-items-center">
     <new-publication class="col-start-2"></new-publication>
     <Profile class="col-start-3 ml-auto mr-6"></Profile>
   </div>

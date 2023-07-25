@@ -13,9 +13,14 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -28,6 +33,8 @@ public class EventService {
 
     @Autowired
     private PublicationRepository publicationRepository;
+
+    private final Path root = Paths.get("public/uploads/imgs_files");
 
     public Event save(Event event) {
         return eventRepository.save(event);
@@ -51,7 +58,10 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
-    public EventResponse adicionarEvento(EventRequest eventRequest) {
+    public EventResponse adicionarEvento(EventRequest eventRequest) throws IOException {
+
+        Files.createDirectories(root);
+        Files.copy(eventRequest.getFile_image().getInputStream(), this.root.resolve(Objects.requireNonNull(eventRequest.getFile_image().getOriginalFilename())));
 
         var event = Event.builder()
                 .likes(0L)
@@ -61,6 +71,7 @@ public class EventService {
                 .description(eventRequest.getDescription())
                 .type(String.valueOf(TypePublication.EVENTO))
                 .dateTime(LocalDateTime.now())
+                .image_file(eventRequest.getFile_image().getOriginalFilename())
                 .build();
 
         eventRepository.save(event);

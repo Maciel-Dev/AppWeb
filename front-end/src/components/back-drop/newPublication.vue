@@ -45,10 +45,9 @@
 <!--                  </form>-->
                 </div>
                 <div>
-                  <img
-                      alt=""
-                      class="rounded-3xl" src="https://blog.emania.com.br/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2016/02/direitos-autorais-e-de-imagem-1024x683.jpg.webp">
-                  <file-image-button></file-image-button>
+                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+                  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help"  id="files" type="file" ref="uploadImage" @change="onImageUpload()">
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
                 </div>
               </div>
             </form>
@@ -87,6 +86,7 @@ export default {
     return {
       showModal: false,
       publication: new Publication("", "", "", "", "", "", this.$cookies.get("user_id")),
+      img_file: null,
       pSend: false,
       user_id: this.$cookies.get("user_id")
     }
@@ -99,14 +99,15 @@ export default {
     },
     sendPublication() {
       // Create function to Send data Via FormData
-      const PublicationForm = new FormData();
+      let PublicationForm = new FormData();
       PublicationForm.append("description", this.publication.description);
       PublicationForm.append("title", this.publication.title);
       PublicationForm.append("data", new Date().getDate().toString());
-      PublicationForm.append("type", "EVENTO");
-      PublicationForm.append("author", "123");
+      PublicationForm.append("type", this.publication.type);
+      PublicationForm.append("author", this.publication.author);
       PublicationForm.append("id_perfil", this.$cookies.get("user_id"));
-      postPublication(this.publication)
+      PublicationForm.append("file_image", this.publication.image_file)
+      postPublication(PublicationForm)
           .then((response) => {
             if (response.status === 200 || response.status === 201) {
               this.setPublication(this.publication)
@@ -115,6 +116,9 @@ export default {
             }
           });
     },
+    onImageUpload(){
+      this.publication.image_file = this.$refs.uploadImage.files[0];
+    }
   }
 }
 </script>

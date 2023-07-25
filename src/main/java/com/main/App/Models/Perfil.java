@@ -42,9 +42,10 @@ public class Perfil {
     List <Publication> publications;
 
     @Builder
-    public Perfil(Long id, String biography, User user) {
+    public Perfil(Long id, String biography, User user, String gender) {
         this.id = id;
         this.biography = biography;
+        this.gender = gender;
         this.creationDate = Calendar.getInstance().getTime();
         this.user = user;
     }

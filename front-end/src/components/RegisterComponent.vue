@@ -73,9 +73,6 @@ export default {
     }
   },
   methods: {
-    // handleFilesUpload(){
-    //   this.file = this.$refs.files.files;
-    // },
     registerUser: function(event){
       this.form_data = new FormData();
       this.form_data_image = new FormData();
@@ -85,8 +82,6 @@ export default {
       this.form_data.append("password", this.user.password);
       this.form_data.append("username", this.user.username);
       this.form_data.append("file_image", this.user.file_image);
-      // this.form_data = new FormData();
-      // this.form_data.append("request", this.user);
       register(this.form_data);
 
       this.$router.push("/login");

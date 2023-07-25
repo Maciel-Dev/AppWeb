@@ -4,7 +4,11 @@ import Publication from "@/model/Publication";
 const URL_API_PUBLICATIONS = "http://localhost:8082/api/auth/";
 
 export function postPublication(publication){
-    return axios.post(URL_API_PUBLICATIONS + publication.type.toString().toLowerCase() + "/post", publication);
+    alert(publication.get);
+
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+    return axios.post(URL_API_PUBLICATIONS + publication.get("type").toString().toLowerCase() + "/post", publication, config);
 }
 
 export function getPublications(){

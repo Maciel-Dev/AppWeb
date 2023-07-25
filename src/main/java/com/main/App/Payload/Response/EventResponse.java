@@ -18,4 +18,5 @@ public class EventResponse {
     private String type;
     private Long like;
     private String author;
+    private byte[] img_file;
 }

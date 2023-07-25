@@ -21,6 +21,7 @@ export function getPerfil(id){
 export function createPerfil(perfil){
     return axios.post(URL_API_PERFIL + "/post", {
         biography: perfil.bio,
+        gender: perfil.gen,
         fkUser: perfil.id
     })
 }

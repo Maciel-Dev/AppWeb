@@ -46,7 +46,13 @@ public class PerfilService {
 
         ur.setFirstLogin(user.getId());
 
-        Perfil perfil = Perfil.builder().id(request.getFkUser()).user(user).biography(request.getBiography()).build();
+        Perfil perfil = Perfil.builder()
+                .id(request.getFkUser())
+                .user(user)
+                .gender(request.getGender())
+                .biography(request.getBiography())
+                .build();
+
         pr.save(perfil);
 
         return PerfilResponse.builder().id(perfil.getId()).biography(perfil.getBiography()).build();

@@ -6,7 +6,8 @@ export default class Publication{
     type = null;
     author = "";
     id_perfil = null;
-    constructor(id, data, description, title, type, author, id_perfil) {
+    image_file = null;
+    constructor(id, data, description, title, type, author, id_perfil, image_file) {
 
         this.id = id;
         this.data = data;
@@ -15,5 +16,6 @@ export default class Publication{
         this.type = type;
         this.author = author;
         this.id_perfil = id_perfil;
+        this.image_file = image_file;
     }
 }

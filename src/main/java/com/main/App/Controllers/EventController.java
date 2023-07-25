@@ -10,6 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/auth/evento")
@@ -35,8 +43,8 @@ public class EventController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<EventResponse> add(@RequestBody EventRequest ev) throws NoSuchFieldException {
-        return ResponseEntity.ok(eventService.adicionarEvento(ev));
+    public ResponseEntity<EventResponse> add(@ModelAttribute EventRequest request) throws NoSuchFieldException, IOException {
+        return ResponseEntity.ok(eventService.adicionarEvento(request));
     }
 
     @PostMapping("/like")

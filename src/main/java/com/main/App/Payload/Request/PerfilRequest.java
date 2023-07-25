@@ -16,6 +16,8 @@ public class PerfilRequest {
     private String biography;
 //    private List<Long> topics;
     @NotBlank
+    private String gender;
+    @NotBlank
     private Long fkUser;
 
 }

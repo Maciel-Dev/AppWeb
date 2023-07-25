@@ -26,6 +26,7 @@ public class Publication {
     private String description;
     private Date data;
     private Long likes;
+    private String image_file;
     @ManyToOne
     @JoinColumn(name = "fk_perfil")
     private Perfil perfil;

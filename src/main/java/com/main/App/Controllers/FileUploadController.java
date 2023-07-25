@@ -34,18 +34,14 @@ public class FileUploadController {
     public ResponseEntity<MultipartFile> sendFile(@RequestParam MultipartFile multipartFile) throws IOException {
         Files.createDirectories(root);
         Files.copy(multipartFile.getInputStream(), this.root.resolve(Objects.requireNonNull(multipartFile.getOriginalFilename())));
-//        multipartFile.transferTo(new File("../resources/public/" + multipartFile.getOriginalFilename()));
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) throws IOException{
         Optional<User> user = userRepository.findById(Long.parseLong(id));
-
         File imageFile = new File("public/uploads/" + user.get().getImg_profile());
-
         byte[] imageBytes = Files.readAllBytes(imageFile.toPath());
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
 
