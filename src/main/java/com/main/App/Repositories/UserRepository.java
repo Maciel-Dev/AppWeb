@@ -17,7 +17,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByUsername(String username);
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE users set first_login = 0 where id = :fk")
+    @Query(nativeQuery = true, value = "UPDATE users SET first_login = 0 WHERE id = :fk")
     void setFirstLogin(Long fk);
+
+    @Query(nativeQuery = true, value = "SELECT id FROM perfils WHERE fk_user = :fk")
+    String findIdPerfilByUser(Long fk);
 
 }

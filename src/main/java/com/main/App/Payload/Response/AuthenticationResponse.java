@@ -17,6 +17,7 @@ public class AuthenticationResponse {
     private String firstName;
     private String lastName;
     private String id_user;
+    private String id_perfil;
     private boolean c_perfil;
     private boolean first_login;
 

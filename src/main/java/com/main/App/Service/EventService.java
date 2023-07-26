@@ -1,11 +1,13 @@
 package com.main.App.Service;
 
+import com.main.App.Models.Comment;
 import com.main.App.Models.Event;
 import com.main.App.Models.TypePublication;
 import com.main.App.Payload.Request.EventRequest;
 import com.main.App.Payload.Request.LikeRequest;
 import com.main.App.Payload.Response.EventResponse;
 import com.main.App.Payload.Response.LikeResponse;
+import com.main.App.Repositories.CommentRepository;
 import com.main.App.Repositories.EventRepository;
 import com.main.App.Repositories.PerfilRepository;
 import com.main.App.Repositories.PublicationRepository;
@@ -17,7 +19,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Array;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -27,10 +31,8 @@ import java.util.Objects;
 public class EventService {
     @Autowired
     private EventRepository eventRepository;
-
     @Autowired
     private PerfilRepository perfilRepository;
-
     @Autowired
     private PublicationRepository publicationRepository;
 
@@ -59,6 +61,7 @@ public class EventService {
     }
 
     public EventResponse adicionarEvento(EventRequest eventRequest) throws IOException {
+
 
         Files.createDirectories(root);
         Files.copy(eventRequest.getFile_image().getInputStream(), this.root.resolve(Objects.requireNonNull(eventRequest.getFile_image().getOriginalFilename())));

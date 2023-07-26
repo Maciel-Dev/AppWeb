@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -30,6 +27,16 @@ public class Publication {
     @ManyToOne
     @JoinColumn(name = "fk_perfil")
     private Perfil perfil;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "publication_comment",
+            joinColumns = { @JoinColumn(name = "publication_id")},
+            inverseJoinColumns = { @JoinColumn(name = "comment_id")})
+    List<Comment> comments = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {

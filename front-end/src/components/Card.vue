@@ -7,9 +7,11 @@
 <!--      <div class="">-->
 <!--        <p class="text-white font-semibold">{{ publicationItem.type }}</p>-->
 <!--      </div>-->
-      <img alt=""
-           class="rounded-t-lg col-span-full row-span-full"
-           src="https://blog.unis.edu.br/hubfs/carteirinha-nacional-do-estudante-o-que-e-importante-saber.jpg">
+      <div class="text-center col-start-2 place-items-center rounded bg-black">
+        <img alt=""
+             class="rounded-t-lg object-fill"
+             v-bind:src="img_file">
+      </div>
       <div class="flex flex-col justify-between p-4 leading-normal col-span-full">
         <div class="bg-blue-500 w-auto text-center h-auto rounded text-white font-bold">{{publicationItem.type}}</div>
         <h5 class="dis mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{
@@ -20,7 +22,8 @@
 
         </p>
         <p class="text-white">Likes: {{ publicationItem.like }}</p>
-        <p class="text-white">Author: {{  }}</p>
+        <p class="text-white">Author: {{ publicationItem.author }}</p>
+        <p class="text-white">ID: {{ this.card_id }}</p>
       </div>
     </a>
     <div
@@ -31,7 +34,7 @@
       <div class="">
         <donate-button class=""></donate-button>
       </div>
-      <div v-if="this.user_id == this.card_id" class="text-red-500">
+      <div v-if="this.id_perfil == this.card_id" class="text-red-500">
         <font-awesome-icon :icon="['fas', 'trash']" class="heart" size="2xl" id="animateButton" />
       </div>
 
@@ -45,22 +48,36 @@
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import DonateButton from "@/components/buttons/donateButton.vue";
 import Heart from "@/components/icons/heart.vue";
+import axios from "axios";
 
 export default {
   name: "Card",
   components: {Heart, DonateButton, FontAwesomeIcon},
   props: ["publicationItem"],
-  computed: {
-  },
+  computed: {},
   data() {
     return {
-      user_id: this.$cookies.get("user_id"),
-      card_id: this.publicationItem.fk_perfil
+      id_perfil: this.$cookies.get("id_perfil"),
+      card_id: this.publicationItem.fk_perfil,
+      img_file: ''
     }
   },
   mounted() {
-  }
-
+    this.carregarImagem();
+  },
+  methods: {
+      carregarImagem() {
+        axios.get("http://localhost:8082/api/auth/publication/image/" + this.publicationItem.id, {
+          responseType: 'arraybuffer'
+        })
+            .then(response => {
+              this.img_file = URL.createObjectURL(new Blob([response.data], {type: 'image/jpg'}));
+            })
+            .catch(error => {
+              console.error(error);
+            });
+      },
+    }
 }
 </script>
 

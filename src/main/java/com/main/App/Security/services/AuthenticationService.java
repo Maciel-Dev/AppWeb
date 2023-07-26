@@ -80,12 +80,13 @@ public class AuthenticationService {
         Optional<User> user = userRepository.findByUsername(authenticationRequest.getUsername());
 
         if (user.isPresent()) {
-            return AuthenticationResponse.builder().
-                    userDetails(userDetails)
+            return AuthenticationResponse.builder()
+                    .userDetails(userDetails)
                     .token(jwt)
                     .firstName(user.get().getFirstName())
                     .lastName(user.get().getLastName())
                     .id_user(user.get().getId().toString())
+                    .id_perfil(userRepository.findIdPerfilByUser(user.get().getId()))
                     .first_login(user.get().isFirstLogin())
                     .build();
         } else {

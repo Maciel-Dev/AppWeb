@@ -8,18 +8,18 @@
   <pub-confirmation v-if="pubSend"></pub-confirmation>
 
   <div class="grid h-screen place-items-center ml-30">
-    <div class="mt-5">
+    <div v-for="item in this.getPublications" :key="item.id" class="mt-5 flex flex-row">
       <!-- Put Here -->
-      <div class="container">
+      <div class="displa">
         <ul>
-          <li v-for="item in this.getPublications" :key="item.id">
+          <li>
             <div v-if="item.title != '' ">
               <Card :publication-item="item" class=""/>
             </div>
           </li>
         </ul>
       </div>
-
+      <CommentComponent></CommentComponent>
     </div>
   </div>
 
@@ -37,10 +37,11 @@ import NewPublication from "@/components/back-drop/newPublication.vue";
 import {getPublications} from "@/service/PublicationService";
 import {setAuthHeader} from "@/service/AxiosService";
 import PubConfirmation from "@/components/CardPopup/pubConfirmation.vue";
+import CommentComponent from "@/components/Comment/CommentComponent.vue";
 // import CardPopup from "@/components/CardPopup/CardPopup.vue";
 
 export default {
-  components: {PubConfirmation, NewPublication, Profile, Card},
+  components: {CommentComponent, PubConfirmation, NewPublication, Profile, Card},
   setup() {
     // const userStore = useUserStore;
     // return { userStore };
@@ -81,16 +82,15 @@ export default {
     ...mapGetters([
       'getUser',
       'getPublications',
-        'getPubSend'
+      'getPubSend'
     ]),
     now() {
       return this.info?.Object;
     },
-    getPublicationSend(){
-      alert(this.pubSend);
+    getPublicationSend() {
       return this.getPubSend;
     },
-    removeSendPub(){
+    removeSendPub() {
 
     }
   },
@@ -113,7 +113,7 @@ export default {
     if (!this.$cookies.get("user")) {
       this.$router.push("/login");
     }
-    if(this.pubSend){
+    if (this.pubSend) {
       this.setPubSend(false);
     }
   }

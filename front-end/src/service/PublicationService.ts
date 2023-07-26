@@ -4,7 +4,6 @@ import Publication from "@/model/Publication";
 const URL_API_PUBLICATIONS = "http://localhost:8082/api/auth/";
 
 export function postPublication(publication){
-    alert(publication.get);
 
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
