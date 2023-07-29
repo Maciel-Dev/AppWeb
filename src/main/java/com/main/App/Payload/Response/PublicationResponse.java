@@ -1,5 +1,6 @@
 package com.main.App.Payload.Response;
 
+import com.main.App.Models.Comment;
 import com.main.App.Models.Publication;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,5 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 public class PublicationResponse {
     List<Publication> publication;
+    List<Comment> comments;
 
 }

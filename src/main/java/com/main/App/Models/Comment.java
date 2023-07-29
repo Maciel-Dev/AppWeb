@@ -12,10 +12,12 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "comment")
+//@Table(name = "comment")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,10 +27,12 @@ public class Comment {
     @GeneratedValue
     private Long id;
     private String message;
+    @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "fk_user")
+    @JoinColumn(name = "fk_perfil")
     private Perfil perfil;
     @ManyToMany
+    @JsonIgnore
     private List<Publication> publications = new ArrayList<>();
 
 }

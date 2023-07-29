@@ -29,14 +29,14 @@ public class Publication {
     private Perfil perfil;
 
     @OneToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "publication_comment",
-            joinColumns = { @JoinColumn(name = "publication_id")},
+              cascade = {
+        CascadeType.PERSIST,
+                CascadeType.MERGE
+    })
+    @JoinTable(name = "comment",
+            joinColumns = { @JoinColumn(name = "pub_id")},
             inverseJoinColumns = { @JoinColumn(name = "comment_id")})
-    List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {
