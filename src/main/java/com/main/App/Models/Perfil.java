@@ -24,7 +24,6 @@ public class Perfil {
     private Date creationDate;
     private Date birthDate;
     private String gender;
-
     @OneToOne
     @JoinColumn(name = "fk_user")
     private User user;

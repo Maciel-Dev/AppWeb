@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PublicationResponse {
-    List<Publication> publication;
-    List<Comment> comments;
+    Publication publication;
+    private String username;
 
 }

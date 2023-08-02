@@ -1,5 +1,6 @@
 package com.main.App.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class Publication {
     private Date data;
     private Long likes;
     private String image_file;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_perfil")
     private Perfil perfil;

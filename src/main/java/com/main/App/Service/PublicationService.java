@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +25,14 @@ public class PublicationService {
     @Autowired
     PublicationRepository publicationRepository;
 
-    public PublicationResponse getAll(){
-        return PublicationResponse.builder().publication(publicationRepository.findAll()).build();
+    public List<PublicationResponse> getAll(){
+        List<PublicationResponse> publicationResponseList = new ArrayList<>();
+        List<Publication> pubList = publicationRepository.findAll();
+
+        for(Publication pub : pubList){
+            publicationResponseList.add(PublicationResponse.builder().publication(pub).username(pub.getPerfil().getUser().getUsername()).build());
+        }
+        return publicationResponseList;
     }
 
 }

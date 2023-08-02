@@ -9,4 +9,7 @@ public interface PerfilRepository extends JpaRepository<Perfil, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM webapp.perfils WHERE fk_user = :fk")
     Perfil findPerfilByUser(Long fk);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM webapp.perfils WHERE id = :fk")
+    Perfil findPerfilByIdQuery(Long fk);
+
 }
